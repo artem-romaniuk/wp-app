@@ -1,0 +1,22 @@
+{
+    "name": "artem/wp-app",
+    "description": "This is simple basic framework for rapid development wordpress templates",
+    "type": "project",
+    "license": "GNU (General Public License)",
+    "authors": [
+        {
+            "name": "Artem Romaniuk",
+            "email": "artem.romaniuk@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/bootstrap.php"
+        ]
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}
