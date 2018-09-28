@@ -52,7 +52,7 @@ class FileSystem
     public function prepend($path, $data)
     {
         if ($this->exists($path)) {
-            return $this->put($path, $data.$this->get($path));
+            return $this->put($path, $data . $this->get($path));
         }
 
         return $this->put($path, $data);
@@ -113,13 +113,13 @@ class FileSystem
     }
 
 
-    public function basename($path)
+    public function baseName($path)
     {
         return pathinfo($path, PATHINFO_BASENAME);
     }
 
 
-    public function dirname($path)
+    public function dirName($path)
     {
         return pathinfo($path, PATHINFO_DIRNAME);
     }
@@ -187,7 +187,19 @@ class FileSystem
 
     public function files($directory)
     {
-        //
+        $files = [];
+
+        $dir = $this->normalizeDir($directory);
+
+        if ($this->isDirectory($dir)) {
+            foreach (scandir($dir) as $file) {
+                $filePath = $dir . DIRECTORY_SEPARATOR . $file;
+                if (!$this->isFile($filePath)) continue;
+                $files[] = $filePath;
+            }
+        }
+
+        return $files;
     }
 
 
@@ -204,5 +216,11 @@ class FileSystem
         }
 
         return mkdir($path, $mode, $recursive);
+    }
+
+
+    private function normalizeDir($dir)
+    {
+        return rtrim($dir, '/' . \DIRECTORY_SEPARATOR);
     }
 }

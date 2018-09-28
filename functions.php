@@ -1,6 +1,11 @@
 <?php
+defined('ABSPATH') or die();
 
-show_admin_bar(false);
+if (defined('WP_DEBUG') && WP_DEBUG === false) {
+    show_admin_bar(false);
+}
+
+
 
 define('TEXT_DOMAIN', 'default');
 

@@ -15,7 +15,8 @@ $config = [
 
 $c = $appDir . DIRECTORY_SEPARATOR . 'config/';
 
+$g = 'hello';
 
 echo '<pre>';
-print_r(realpath(__DIR__));
+print_r((array) $g);
 echo '</pre>';
