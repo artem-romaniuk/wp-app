@@ -1,4 +1,5 @@
 <?php
+
 defined('ABSPATH') or die();
 
 if (defined('WP_DEBUG') && WP_DEBUG === false) {

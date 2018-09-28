@@ -2,7 +2,6 @@
 
 namespace App\Core\Application;
 
-use App\Core\FileSystem\FileSystem;
 
 class Application
 {
@@ -10,32 +9,52 @@ class Application
 
     protected $config = [];
 
+
     public function __construct($basePath = null)
     {
         if ($basePath) {
             $this->setBasePath($basePath);
         }
 
-        $this->resolve();
-    }
+        $this->loadConfigurationFiles();
 
-    protected function resolve()
-    {
-        $this->resolveConfig();
+        $this->loadFunctionFiles();
     }
 
 
-    protected function resolveConfig()
+    protected function loadConfigurationFiles()
     {
-        $fileSystem = new FileSystem();
+        $files = $this->getFiles($this->configPath());
 
-        $configPath = $this->configPath();
-
-        $files = $fileSystem->files($configPath);
-
-        foreach ($files as $file) {
-            $this->config[$fileSystem->name($file)] = $fileSystem->getRequire($file);
+        foreach ($files as $key => $path) {
+            $this->setConfig($key, require $path);
         }
+    }
+
+
+    protected function loadFunctionFiles()
+    {
+        $files = $this->getFiles($this->functionsPath());
+
+        foreach ($files as $path) {
+            require $path;
+        }
+    }
+
+
+    protected function getFiles($directory)
+    {
+        $files = [];
+
+        $dir = realpath($directory);
+
+        if (is_dir($dir)) {
+            foreach (glob($dir . DIRECTORY_SEPARATOR . '*.php') as $file) {
+                $files[basename($file, '.php')] = $file;
+            }
+        }
+
+        return $files;
     }
 
 
@@ -53,8 +72,20 @@ class Application
     }
 
 
-    public function getConfig($key, $default)
+    public function functionsPath($path = '')
     {
-        return isset($this->config[$key]) ? $this->config[$key] : $default;
+        return $this->basePath . DIRECTORY_SEPARATOR . 'functions' . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+    }
+
+
+    public function setConfig($key, $value = null)
+    {
+        $this->config[$key] = $value;
+    }
+
+
+    public function getConfig($key = null, $default = null)
+    {
+        return $key && isset($this->config[$key]) ? $this->config[$key] : ($key ? $default : $this->config);
     }
 }
