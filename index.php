@@ -1,5 +1,7 @@
 <?php
 
+wp_head();
+
 global $wp_query;
 
 $queriedObject = $wp_query->get_queried_object();
@@ -22,3 +24,5 @@ if ($queriedObject instanceof \WP_User)
 {
 
 }
+
+wp_footer();
