@@ -4,6 +4,7 @@ namespace App\Core\Application;
 
 use App\Core\Container\Container;
 use App\Providers\AppServiceProvider;
+use App\Providers\ModelServiceProvider;
 
 class Application
 {
@@ -32,6 +33,7 @@ class Application
     protected function registerBaseServiceProviders()
     {
         $this->container->register(new AppServiceProvider());
+        $this->container->register(new ModelServiceProvider());
     }
 
     protected function loadConfigurationFiles()
@@ -107,5 +109,12 @@ class Application
     protected function instance($key, $value)
     {
         $this->instances[$key] = $value;
+    }
+
+    public function make($class, array $parametrs = [])
+    {
+        if (class_exists($class)) {
+            return new $class();
+        }
     }
 }

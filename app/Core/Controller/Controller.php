@@ -5,7 +5,7 @@ namespace App\Core\Controller;
 
 abstract class Controller
 {
-    abstract public function index();
+    abstract public function single();
 
-    abstract public function taxonomy();
+    abstract public function archive();
 }

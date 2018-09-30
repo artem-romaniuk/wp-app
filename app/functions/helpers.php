@@ -31,3 +31,18 @@ if (!function_exists('config')) {
         return $config ? $config : $default;
     }
 }
+
+
+if (!function_exists('model')) {
+
+    function model($key = null)
+    {
+        if (is_null($key)) {
+            return Container::getInstance();
+        }
+
+        $model = Container::getInstance();
+
+        return $model['model.' . $key];
+    }
+}
