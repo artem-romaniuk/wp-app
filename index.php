@@ -2,83 +2,58 @@
 
 defined('ABSPATH') or die('Access denied');
 
-wp_head();
 
 global $app, $wp_query;
 
 $queriedObject = $wp_query->get_queried_object();
 
-if (is_home() && is_front_page()) {
+$defaultController = 'App\Controllers\DefaultController';
+
+
+// Это главная страница по умодчанию (выводятся посты)
+if (is_front_page() && is_home()) {
     $app->make('App\Controllers\PageController')->posts();
-    //echo 'Это главная страница по умодчанию (выводятся посты)';
 }
+// Это главная страница установленная в настройках
 elseif (is_front_page()) {
     $app->make('App\Controllers\PageController')->front();
-    //echo 'Это главная страница установленная в настройках';
 }
+// Это страница постов
 elseif (is_home()) {
     $app->make('App\Controllers\PageController')->posts();
-    //echo 'Это страница постов';
+}
+elseif (is_404()) {
+    $app->make('App\Controllers\PageController')->notFound();
 }
 elseif ($queriedObject instanceof \WP_Post) {
 
+    // Это отдельная запись
     if ('post' === $queriedObject->post_type && is_single()) {
         $app->make('App\Controllers\PostController')->single();
-        //echo 'Это отдельная запись';
     }
+    // Это стандартная страница
     elseif (is_page() && is_page() && is_singular()) {
         $app->make('App\Controllers\PageController')->single();
-        //echo 'Это стандартная страница';
     }
+    // Это стандартная страница произвольного типа записей
     else {
         $type = ucfirst($queriedObject->post_type);
         $class = 'App\Controllers\\' . $queriedObject->post_type . 'Controller';
-        $make = class_exists($class) ? $class : 'App\Controllers\DefaultController';
+        $make = class_exists($class) ? $class : $defaultController;
         $app->make($make)->single();
-
-        //echo 'Это стандартная страница ' . $queriedObject->post_type;
     }
 
 }
 elseif ($queriedObject instanceof \WP_Term) {
 
-    $postType = get_post_type();
+    $postType = ucfirst(get_post_type());
     $taxonomy = $queriedObject->taxonomy;
+    $class = 'App\Controllers\\' . $postType . 'Controller';
+    $make = class_exists($class) ? $class : $defaultController;
 
-    $object = $app->make('App\Controllers\\' . $queriedObject->post_type . 'Controller');
-
-    var_dump($postType);
-    var_dump($taxonomy);
-
+    $app->make($make)->archive($taxonomy);
 }
 elseif ($queriedObject instanceof \WP_User) {
 
-    echo '<pre>';
-    print_r($queriedObject);
-    echo '</pre>';
-
+    $app->make($defaultController)->user();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-wp_footer();

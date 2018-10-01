@@ -1,1 +1,15 @@
 /vendor/
+!/app/Controllers/DefaultController.php
+!/app/Controllers/PageController.php
+!/app/Controllers/PostController.php
+/app/Controllers/*
+!/app/Models/Page.php
+!/app/Models/Post.php
+/app/Models/*
+!/app/views/default/**
+!/app/views/layouts/header.php
+!/app/views/layouts/footer.php
+!/app/views/layouts/default.php
+!/app/views/page/**
+!/app/views/post/**
+/app/views/**

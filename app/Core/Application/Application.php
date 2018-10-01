@@ -84,6 +84,7 @@ class Application
         $this->instance('path.app', $this->appPath());
         $this->instance('path.config', $this->configPath());
         $this->instance('path.functions', $this->functionsPath());
+        $this->instance('path.views', $this->viewsPath());
     }
 
     public function basePath($path = '')
@@ -106,6 +107,11 @@ class Application
         return $this->appPath() . DIRECTORY_SEPARATOR . 'functions' . ($path ? DIRECTORY_SEPARATOR . $path : $path);
     }
 
+    public function viewsPath($path = '')
+    {
+        return $this->appPath() . DIRECTORY_SEPARATOR . 'views' . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+    }
+
     protected function instance($key, $value)
     {
         $this->instances[$key] = $value;
@@ -113,8 +119,6 @@ class Application
 
     public function make($class, array $parametrs = [])
     {
-        if (class_exists($class)) {
-            return new $class();
-        }
+        return new $class();
     }
 }

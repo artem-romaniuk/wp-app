@@ -2,18 +2,18 @@
 
 namespace App\Controllers;
 
-use App\Core\Container\Container;
+use App\Core\Controller\Controller;
 use App\Models\Post;
 
-class PostController extends Container
+class PostController extends Controller
 {
     public function single()
     {
-        echo 'Single Post';
+        $this->view('post/single');
     }
 
     public function archive()
     {
-        echo 'Archive Page';
+        $this->view('post/archive');
     }
 }

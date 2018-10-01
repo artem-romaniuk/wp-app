@@ -6,13 +6,16 @@ use App\Core\Controller\Controller;
 
 class DefaultController extends Controller
 {
+    protected $layout = 'default';
+
+
     public function single()
     {
-        echo 'Single page Default Controller';
+        $this->view('default/single');
     }
 
-    public function archive()
+    public function archive($taxonomy)
     {
-
+        $this->view('default/archive');
     }
 }

@@ -9,21 +9,26 @@ class PageController extends Controller
 {
     public function front()
     {
-        echo 'Front Page';
+        $this->view('page/front');
     }
 
     public function single()
     {
-        echo 'Static Page';
+
+        $all_pages = 'All pages';
+
+        $this->view('page/single', [
+            'all' => $all_pages
+        ]);
     }
 
     public function posts()
     {
-        echo 'Page with posts';
+        $this->view('page/posts');
     }
 
-    public function archive()
+    public function notFound()
     {
-
+        $this->view('page/404');
     }
 }

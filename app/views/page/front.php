@@ -1,2 +1,1 @@
-<?php
-
+Front Page
