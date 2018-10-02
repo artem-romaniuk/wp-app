@@ -11,8 +11,9 @@ require_once get_template_directory() . DIRECTORY_SEPARATOR . 'vendor' . DIRECTO
 app('theme')->init();
 
 
-echo '<pre>';
-print_r(app());
-echo '</pre>';
+//echo '<pre>';
+//print_r(get_metadata('post', 1));
+//print_r(app());
+//echo '</pre>';
 
 

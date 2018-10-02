@@ -12,9 +12,13 @@ class Model
     protected $container;
 
 
-    public function __construct(Container $container, $fd)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }
 
+    protected function queryPost(array $arguments = [])
+    {
+        return new \WP_Query($arguments);
+    }
 }
