@@ -4,6 +4,7 @@ return [
 
     'set' => [
 
+        /*
         'main' => [
 
             'src' => 'js/main.js',
@@ -11,7 +12,7 @@ return [
             'version' => false,
             'in_footer' => true,
 
-            /*
+
             'localize' => [
                 'jsVars',
                 [
@@ -19,9 +20,9 @@ return [
                     //'....' => '...'
                 ]
             ]
-            */
 
         ]
+        */
 
     ],
 
