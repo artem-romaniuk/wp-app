@@ -83,10 +83,39 @@ return [
 
         'metas' => [
 
+            'test_group' => [
+                'label' => 'Boxes group Title',
+                'position' => 'normal',
+                'priority' => 'high',
+                'fields' => [
+
+                    'test' => [
+                        'name' => 'test',
+                        'label' => 'Title field',
+                        'component' => 'App\Components\MetaBox\Text',
+                        'single' => true,
+                        'params' => [
+
+                        ]
+                    ],
+                    'test2' => [
+                        'name' => 'test',
+                        'label' => 'Title field2',
+                        'component' => 'App\Components\MetaBox\Text',
+                        'single' => true,
+                        'params' => [
+
+                        ]
+                    ],
+
+                ]
+            ],
+
         ]
 
     ],
 
+    /*
     'type_name_2' => [
 
         'type' => [
@@ -102,6 +131,7 @@ return [
         ]
 
     ]
+    */
 
 
 ];
