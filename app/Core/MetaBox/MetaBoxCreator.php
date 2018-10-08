@@ -6,6 +6,7 @@ class MetaBoxCreator
 {
     protected $scope;
 
+
     public function __construct(array $scope = [])
     {
         $this->scope = $scope;
@@ -34,7 +35,7 @@ class MetaBoxCreator
     {
         add_action('add_meta_boxes', [$this, 'register'], 10, 2);
 
-        //add_action('save_post', [$this, 'save'], 10, 3);
+        add_action('save_post', [$this, 'save'], 10, 3);
     }
 
     public function outputBoxHtml($post, $arguments)
@@ -64,58 +65,72 @@ class MetaBoxCreator
         }
 
         echo '</div>';
-
     }
 
     protected function fullNameField($id, $field)
     {
         return $id . '_' . $field;
     }
-    
+
     protected function isMetaBoxClass($class)
     {
         return class_exists($class);
     }
 
-    public function save($id, $post)
+    public function save($post_id, $post)
     {
-        if (!$this->canSave($post))
+        foreach ($this->scope as $name => $components)
         {
-            return;
-        }
+            if (isset($components['metas']))
+            {
+                foreach ($components['metas'] as $id => $meta)
+                {
+                    if (!$this->canSave($post, $name, $id))
+                    {
+                        return;
+                    }
 
-        foreach ($this->types as $name => $params)
-        {
-            $name = $this->fullNameField($name);
+                    foreach ($meta['fields'] as $field => $params)
+                    {
+                        $name = $this->fullNameField($id, $field);
 
-            $value = null;
+                        $value = null;
 
-            $typeClass = $this->metaBoxClassName($params['type']);
+                        $typeClass = $params['component'];
 
-            if ($this->isMetaBoxClass($typeClass)) {
-                $value = $typeClass::beforeSave($_POST[$name]);
-            }
+                        if ($this->isMetaBoxClass($typeClass))
+                        {
+                            $value = $typeClass::beforeSave($_POST[$name]);
+                        }
 
-            if ($value) {
-                update_post_meta($id, $name, $value);
-            }
-            else {
-                delete_post_meta($id, $name);
+                        if ($value)
+                        {
+                            update_post_meta($post_id, $name, $value);
+                        }
+                        else
+                        {
+                            delete_post_meta($post_id, $name);
+                        }
+                    }
+                }
             }
         }
     }
 
-    protected function canSave(\WP_Post $post)
+    protected function canSave(\WP_Post $post, $name, $id)
     {
-        if (!isset($_POST[$this->arguments['id'] . '_wp_nonce'])) {
+        if (!isset($_POST[$id . '_wp_nonce']))
+        {
             return false;
         }
 
-        if (!wp_verify_nonce($_POST[$this->arguments['id'] . '_wp_nonce'], $this->arguments['id'])) {
+        if (!wp_verify_nonce($_POST[$id . '_wp_nonce'], $id))
+        {
             return false;
         }
 
-        if (!in_array($post->post_type, $this->arguments['screen'])) {
+        if ($post->post_type != $name)
+        {
             return false;
         }
 
