@@ -6,9 +6,27 @@ class Taxonomy
 {
     protected $scope;
 
+    protected $taxonomies = [];
+
+
     public function __construct(array $scope = [])
     {
         $this->scope = $scope;
+
+        $this->normalize();
+    }
+
+    protected function normalize()
+    {
+        foreach ($this->scope as $screen => $components)
+        {
+            if (isset($components['taxonomies']))
+            {
+                $components['taxonomies']['screen'] = $screen;
+
+                $this->taxonomies = $components['taxonomies'];
+            }
+        }
     }
 
     public function create()
@@ -18,20 +36,13 @@ class Taxonomy
 
     public function register()
     {
-        foreach ($this->scope as $name => $components)
-        {
-            $this->factory($name, $components);
-        }
-    }
+        $screen = $this->taxonomies['screen'];
 
-    protected function factory($name, array $components = [])
-    {
-        if (isset($components['taxonomies']))
+        foreach ($this->taxonomies as $taxonomy => $params)
         {
-            foreach ($components['taxonomies'] as $taxonomy => $params)
-            {
-                register_taxonomy($taxonomy, (array) $name, $params);
-            }
+            if ($taxonomy == 'screen') continue;
+
+            register_taxonomy($taxonomy, (array) $screen, $params);
         }
     }
 }

@@ -7,6 +7,6 @@ class OptionCreator
 
     public function create()
     {
-
+        echo 'Option created';
     }
 }

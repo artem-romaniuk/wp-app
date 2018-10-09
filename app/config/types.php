@@ -90,7 +90,6 @@ return [
                 'fields' => [
 
                     'test' => [
-                        'name' => 'test',
                         'label' => 'Title field',
                         'component' => 'App\Components\MetaBox\Text',
                         'single' => true,
@@ -108,7 +107,7 @@ return [
                         ]
                     ],
 
-                ]
+                ],
             ],
 
         ]
