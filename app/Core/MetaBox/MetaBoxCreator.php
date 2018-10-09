@@ -8,6 +8,7 @@ class MetaBoxCreator
 
     protected $metas = [];
 
+
     public function __construct(array $scope = [])
     {
         $this->scope = $scope;
