@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Core\MetaBox\MetaBoxCreator;
+use App\Core\Option\OptionCreator;
 use App\Core\PostType\PostType;
 use App\Core\Taxonomy\Taxonomy;
 use App\Core\Theme\Theme;
@@ -16,6 +17,11 @@ class AppServiceProvider implements ServiceProviderInterface
         $container['theme'] = function ($container) {
             $object = new Theme($container);
             $object->init();
+        };
+
+        $container['option'] = function ($container) {
+            $object = new OptionCreator($container['config.types']);
+            $object->create();
         };
 
         $container['post_type'] = function ($container) {

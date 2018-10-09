@@ -9,6 +9,7 @@ defined('ABSPATH') or die('Access denied');
 require_once get_template_directory() . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 app('theme');
+app('option');
 app('post_type');
 app('taxonomy');
 app('meta_box');

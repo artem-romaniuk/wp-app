@@ -129,7 +129,7 @@ class MetaBoxCreator
             return false;
         }
 
-        if ($post->post_type != $name)
+        if (!in_array($post->post_type, (array) $name))
         {
             return false;
         }
