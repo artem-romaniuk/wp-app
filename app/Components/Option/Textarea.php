@@ -4,12 +4,12 @@ namespace App\Components\Option;
 
 use App\Core\Option\BaseOption;
 
-class Text extends BaseOption
+class Textarea extends BaseOption
 {
     public function html()
     {
         echo '<div class="form-group">';
-        echo '<input id="' . $this->name . '" class="form-control" type="text" name="' . $this->name . '" value="' . $this->value . '">';
+        echo '<textarea id="' . $this->name . '" class="form-control" name="' . $this->name . '">' . $this->value . '</textarea>';
         echo '</div>';
     }
 

@@ -6,17 +6,14 @@ abstract class BaseOption
 {
     protected $name;
 
-    protected $label;
-
     protected $value;
 
     protected $params;
 
 
-    public function __construct($name, $label, $value, array $params = [])
+    public function __construct($name, $value, array $params = [])
     {
         $this->name = $name;
-        $this->label = $label;
         $this->value = $value;
         $this->params = $params;
     }

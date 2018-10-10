@@ -20,7 +20,7 @@ class AppServiceProvider implements ServiceProviderInterface
         };
 
         $container['option'] = function ($container) {
-            $object = new OptionCreator($container['config.types']);
+            $object = new OptionCreator($container['config.options']);
             $object->create();
         };
 

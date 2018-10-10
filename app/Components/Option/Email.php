@@ -4,12 +4,12 @@ namespace App\Components\Option;
 
 use App\Core\Option\BaseOption;
 
-class Text extends BaseOption
+class Email extends BaseOption
 {
     public function html()
     {
         echo '<div class="form-group">';
-        echo '<input id="' . $this->name . '" class="form-control" type="text" name="' . $this->name . '" value="' . $this->value . '">';
+        echo '<input id="' . $this->name . '" class="form-control" type="email" name="' . $this->name . '" value="' . $this->value . '">';
         echo '</div>';
     }
 

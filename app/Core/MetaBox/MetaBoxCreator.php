@@ -65,17 +65,17 @@ class MetaBoxCreator
         foreach ($fields as $field => $params)
         {
             $label = $params['label'];
-            $typeClass = $params['component'];
+            $componentClass = $params['component'];
             $single = $params['single'];
             $params = $params['params'];
 
-            if ($this->isMetaBoxClass($typeClass))
+            if ($this->isMetaBoxClass($componentClass))
             {
                 $name = $this->fullNameField($id, $field);
 
-                $value = $typeClass::beforeOutput(get_post_meta($post->ID, $name, $single));
+                $value = $componentClass::beforeOutput(get_post_meta($post->ID, $name, $single));
 
-                (new $typeClass($name, $label, $value, $params))->html();
+                (new $componentClass($name, $label, $value, $params))->html();
             }
         }
 

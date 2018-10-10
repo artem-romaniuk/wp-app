@@ -21,32 +21,32 @@ return [
      */
     'menu_page' => [
 
-        'page_title' => '',
-        'menu_label' => '',
+        'page_title' => 'Custom options',
+        'menu_label' => 'Custom options',
         'capability' => 'manage_options',
         'position' => 999,
         'icon_url' => '',
-        'page_slug' => '',
+        'page_slug' => 'page_options',
 
         'sections' => [
 
-            'test_section' =>  [
+            'id_section_1' =>  [
 
-                'label' => __('Test settings'),
-                'page' => 'test_options',
+                'label' => 'Section options 1',
+                'group' => 'options_1',
                 'description' => '',
                 'fields' => [
 
-                    'phone' => [
-                        'label' => 'Phone number',
+                    'name_field_1' => [
+                        'label' => 'Options 1',
                         'component' => 'App\Components\Option\Text',
                         'params' => [
 
                         ]
                     ],
-                    'address' => [
-                        'label' => 'Phone number',
-                        'component' => 'App\Components\Option\Text',
+                    'name_field_2' => [
+                        'label' => 'Options 2',
+                        'component' => 'App\Components\Option\Textarea',
                         'params' => [
 
                         ]
@@ -55,24 +55,31 @@ return [
                 ]
             ],
 
-            'test_section_2' =>  [
+            'id_section_2' =>  [
 
-                'label' => __('Test settings'),
-                'page' => 'test_options',
+                'label' => 'Section options 2',
+                'group' => 'options_2',
                 'description' => '',
                 'fields' => [
 
-                    'phone' => [
-                        'label' => 'Phone number',
-                        'component' => 'App\Components\Option\Text',
+                    'name_field_1' => [
+                        'label' => 'Options 1',
+                        'component' => 'App\Components\Option\Number',
                         'params' => [
 
-                        ]
-                    ]
+                        ],
+                    ],
+                    'name_field_2' => [
+                        'label' => 'Options 2',
+                        'component' => 'App\Components\Option\Email',
+                        'params' => [
 
-                ]
+                        ],
+                    ],
+
+                ],
             ],
-        ]
+        ],
     ],
 
 
@@ -92,32 +99,37 @@ return [
      * options-general.php - Настройки (Settings). Или спец. функция: add_options_page()
      * settings.php - Настройки (Settings) сети сайтов в MU режиме.
      */
+
+    /*
     'submenu_page' => [
-
-        'parent_slug' => '',
-        'page_title' => '',
-        'menu_label' => '',
+        'parent_slug' => 'plugins.php',
+        'page_title' => 'Custom options',
+        'menu_label' => 'Custom options',
         'capability' => 'manage_options',
-        'page_slug' => '',
+        'page_slug' => 'sub_page_options',
 
         'sections' => [
+
+            // Sections
 
         ],
 
     ],
+    */
 
-
+    /*
     'theme_page' => [
-
-        'page_title' => '',
-        'menu_label' => '',
+        'page_title' => 'Custom options',
+        'menu_label' => 'Custom options',
         'capability' => 'manage_options',
-        'page_slug' => '',
+        'page_slug' => 'theme_option',
 
         'sections' => [
 
-        ],
+            // Sections
 
+        ],
     ],
+    */
 
 ];
