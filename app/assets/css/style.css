@@ -1,0 +1,44 @@
+
+/* Options languages switcher container */
+.options-language-switcher-container {
+    margin: 15px 10px 15px 0;
+    padding: 5px;
+    border: 1px solid #b0b0b0;
+}
+
+.options-language-switcher-container select {
+    min-width: 200px;
+}
+
+.options-language-switcher-container label {
+    margin-right: 15px;
+}
+/* End Options languages switcher container */
+
+
+/* Options container */
+.custom-options-container {
+    font-size: 12px;
+
+}
+
+.custom-options-form {
+    background: #fff;
+    padding: 15px;
+    margin: 0 10px 15px 0;
+}
+
+.custom-options-container input,
+.custom-options-container textarea {
+    width: 100%;
+}
+
+.custom-options-container textarea {
+    resize: none;
+    height: 100px;
+}
+
+.custom-options-form .button {
+    width: auto;
+}
+/* End Options container */

@@ -17,12 +17,18 @@ class OptionCreator
 
     protected function setLocale()
     {
+        $locale = '';
+
         if (isset($_GET['options_lang']))
         {
-            return strtolower($_GET['options_lang']) . '_';
+            $locale = strtolower($_GET['options_lang']);
+        }
+        elseif (function_exists('icl_get_default_language'))
+        {
+            $locale = icl_get_default_language();
         }
 
-        return '';
+        return $locale != '' ? $locale . '_' : '';
     }
 
     public function create()
@@ -95,16 +101,22 @@ class OptionCreator
 
     public function outputSection($page)
     {
+        echo '<div class="custom-options-container">';
+
         foreach ($this->scope[$page]['sections'] as $section)
         {
             $group = $section['group'];
 
-            echo '<form action="options.php" method="post">';
+            $action = ($this->locale != '') ? '?options_lang=' . trim($this->locale, '_') : '';
+
+            echo '<form action="options.php' . $action . '" method="post" class="custom-options-form">';
             settings_fields($group);
             do_settings_sections($group);
             submit_button();
             echo '</form>';
         }
+
+        echo '</div>';
     }
 
     public function outputFields($page)
@@ -162,11 +174,20 @@ class OptionCreator
 
     protected function selectLanguage()
     {
-        if (function_exists('icl_get_languages'))
+        if (function_exists('icl_get_languages') && function_exists('icl_get_default_language'))
         {
-            echo '<pre>';
-            print_r(icl_get_languages());
-            echo '</pre>';
+            $languages = icl_get_languages();
+
+            echo '<div class="options-language-switcher-container">';
+            echo '<label>' . __('Options language') . '</label>';
+            echo '<select name="options_lang">';
+            foreach ((array) $languages as $key => $detail)
+            {
+                $selectedLanguage = ($key == trim($this->locale, '_')) ? ' selected' : '';
+                echo '<option value="' . $key . '"' . $selectedLanguage . '>' . $detail['native_name'] . '</option>';
+            }
+            echo '</select>';
+            echo '</div>';
         }
     }
 }
