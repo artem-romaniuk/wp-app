@@ -1,27 +1,42 @@
-jQuery(document).ready(function($) {
 
-    /* Options languages switcher */
-    const switcher = $('select[name=options_lang]');
+String.prototype.replaceAll = function(search, replace)
+{
+    return this.split(search).join(replace);
+}
 
-    switcher.on('change', function () {
-        const selectLanguage = $(this).val();
-        document.location.href = setUrlParam(window.location.href, 'options_lang', selectLanguage);
-    });
 
-    const setUrlParam = function(url, key, val) {
-        const newParam = key + '=' + val;
-        let params = '?' + newParam;
+function createItem(containerObject, scopeItemObject, itemsObject, templateString)
+{
+    const cloneItem = scopeItemObject
+        .clone()[0]
+        .outerHTML
+        .replaceAll(templateString, getItemId(itemsObject.children()));
 
-        if (url) {
-            params = url.replace(new RegExp('([?&])' + key + '[^&]*'), '$1' + newParam);
+    itemsObject.append(cloneItem);
+}
 
-            if (params === url) {
-                params += '&' + newParam;
-            }
+function deleteItem(buttonObject)
+{
+    buttonObject
+        .parent()
+        .remove();
+}
+
+function getItemId(items)
+{
+    if (items.length > 0)
+    {
+        const arrayItems = [];
+
+        for (let i = 0; i < items.length; i++)
+        {
+            let propertyValue = +jQuery(items[i]).attr('data-item-id');
+
+            arrayItems.push(propertyValue);
         }
 
-        return params;
-    };
-    /* End Options languages switcher */
+        return Math.max.apply(null, arrayItems) + 1;
+    }
 
-});
+    return 1;
+}

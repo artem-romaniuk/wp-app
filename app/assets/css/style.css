@@ -1,21 +1,4 @@
 
-/* Options languages switcher container */
-.options-language-switcher-container {
-    margin: 15px 10px 15px 0;
-    padding: 5px;
-    border: 1px solid #b0b0b0;
-}
-
-.options-language-switcher-container select {
-    min-width: 200px;
-}
-
-.options-language-switcher-container label {
-    margin-right: 15px;
-}
-/* End Options languages switcher container */
-
-
 /* Options container */
 .custom-options-container {
     font-size: 12px;
@@ -25,7 +8,12 @@
 .custom-options-form {
     background: #fff;
     padding: 15px;
-    margin: 0 10px 15px 0;
+    margin: 15px 10px 15px 0;
+}
+
+.custom-options-form > h2 {
+    border-bottom: 1px solid #b1b1b1;
+    padding: 5px 0;
 }
 
 .custom-options-container input,
@@ -42,3 +30,16 @@
     width: auto;
 }
 /* End Options container */
+
+
+/* Dynamic list option */
+.list-items .items-container li {
+    display: -webkit-flex;
+    display: flex;
+    align-items: baseline;
+}
+
+.list-items .items-container input {
+    width: calc(100% - 100px)!important;
+}
+/* End Dynamic list option */

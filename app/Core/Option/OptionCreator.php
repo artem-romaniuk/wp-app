@@ -17,15 +17,17 @@ class OptionCreator
 
     protected function setLocale()
     {
-        $locale = '';
-
-        if (isset($_GET['options_lang']))
+        if (isset($_GET['lang']) && $_GET['lang'] != 'all')
         {
-            $locale = strtolower($_GET['options_lang']);
+            $locale = strtolower($_GET['lang']);
         }
         elseif (function_exists('icl_get_default_language'))
         {
             $locale = icl_get_default_language();
+        }
+        else
+        {
+            $locale = '';
         }
 
         return $locale != '' ? $locale . '_' : '';
@@ -60,7 +62,6 @@ class OptionCreator
             $position = $params['position'];
 
             add_menu_page($page_title, $menu_label, $capability, $page_slug, function() use($page) {
-                $this->selectLanguage();
                 $this->outputSection($page);
             }, $icon_url, $position);
         });
@@ -77,7 +78,6 @@ class OptionCreator
             $page_slug = $params['page_slug'];
 
             add_submenu_page($parent_slug, $page_title, $menu_label, $capability, $page_slug, function() use($page) {
-                $this->selectLanguage();
                 $this->outputSection($page);
             });
         });
@@ -93,7 +93,6 @@ class OptionCreator
             $page_slug = $params['page_slug'];
 
             add_theme_page($page_title, $menu_label, $capability, $page_slug, function() use($page) {
-                $this->selectLanguage();
                 $this->outputSection($page);
             });
         });
@@ -107,7 +106,7 @@ class OptionCreator
         {
             $group = $section['group'];
 
-            $action = ($this->locale != '') ? '?options_lang=' . trim($this->locale, '_') : '';
+            $action = ($this->locale != '') ? '?lang=' . trim($this->locale, '_') : '';
 
             echo '<form action="options.php' . $action . '" method="post" class="custom-options-form">';
             settings_fields($group);
@@ -170,24 +169,5 @@ class OptionCreator
     protected function isComponentClass($class)
     {
         return class_exists($class);
-    }
-
-    protected function selectLanguage()
-    {
-        if (function_exists('icl_get_languages') && function_exists('icl_get_default_language'))
-        {
-            $languages = icl_get_languages();
-
-            echo '<div class="options-language-switcher-container">';
-            echo '<label>' . __('Options language') . '</label>';
-            echo '<select name="options_lang">';
-            foreach ((array) $languages as $key => $detail)
-            {
-                $selectedLanguage = ($key == trim($this->locale, '_')) ? ' selected' : '';
-                echo '<option value="' . $key . '"' . $selectedLanguage . '>' . $detail['native_name'] . '</option>';
-            }
-            echo '</select>';
-            echo '</div>';
-        }
     }
 }

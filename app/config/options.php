@@ -46,13 +46,20 @@ return [
                     ],
                     'name_field_2' => [
                         'label' => 'Options 2',
-                        'component' => 'App\Components\Option\Textarea',
+                        'component' => 'App\Components\Option\DynamicList',
                         'params' => [
 
                         ]
-                    ]
+                    ],
+                    'name_field_3' => [
+                        'label' => 'Options 3',
+                        'component' => 'App\Components\Option\DynamicList',
+                        'params' => [
 
-                ]
+                        ]
+                    ],
+
+                ],
             ],
 
             'id_section_2' =>  [
