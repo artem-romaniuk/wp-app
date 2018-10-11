@@ -6,10 +6,13 @@
 !/app/Models/Page.php
 !/app/Models/Post.php
 /app/Models/*
+/app/views/**
 !/app/views/default/**
 !/app/views/layouts/header.php
 !/app/views/layouts/footer.php
 !/app/views/layouts/default.php
-!/app/views/page/**
-!/app/views/post/**
-/app/views/**
+!/app/views/page/front.php
+!/app/views/page/posts.php
+!/app/views/page/single.php
+!/app/views/page/404.php
+!/app/views/post/single.php
