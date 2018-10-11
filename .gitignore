@@ -6,7 +6,7 @@
 !/app/Models/Page.php
 !/app/Models/Post.php
 /app/Models/*
-/app/views/**
+/app/views/*
 !/app/views/default/**
 !/app/views/layouts/header.php
 !/app/views/layouts/footer.php
