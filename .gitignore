@@ -2,12 +2,8 @@
 !/app/Controllers/DefaultController.php
 !/app/Controllers/PageController.php
 !/app/Controllers/PostController.php
-/app/Controllers/*
 !/app/Models/Page.php
 !/app/Models/Post.php
-/app/Models/*
-/views/*
-!/views/default/**
 !/views/layouts/header.php
 !/views/layouts/footer.php
 !/views/layouts/default.php
