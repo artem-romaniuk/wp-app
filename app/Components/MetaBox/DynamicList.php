@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Components\Option;
+namespace App\Components\MetaBox;
 
-use App\Core\Option\BaseOption;
+use App\Core\MetaBox\BaseMetaBox;
 
-class DynamicList extends BaseOption
+class DynamicList extends BaseMetaBox
 {
     protected static $placeholder = '#listItemId';
 
 
     public function html()
     { ?>
-        <div class="form-group">
+        <div class="form-group form-group-meta-box">
+            <label><?php echo $this->label; ?></label>
             <div class="items-container list-items">
                 <ul style="display: none;">
                     <li data-item-id="<?php echo self::$placeholder; ?>" class="item-template">
@@ -33,7 +34,7 @@ class DynamicList extends BaseOption
             </div>
         </div>
 
-    <?php add_action('admin_footer', function () { ?>
+        <?php add_action('admin_footer', function () { ?>
 
         <script type="text/javascript">
             jQuery(document).ready(function($) {
@@ -61,13 +62,13 @@ class DynamicList extends BaseOption
 
     public static function beforeOutput($value)
     {
-        if (isset($value[self::$placeholder])) unset($value[self::$placeholder]);
-
         return (array) $value;
     }
 
     public static function beforeSave($value)
     {
+        if (isset($value[self::$placeholder])) unset($value[self::$placeholder]);
+
         return $value;
     }
 }

@@ -91,7 +91,7 @@ return [
 
                     'test' => [
                         'label' => 'Title field',
-                        'component' => 'App\Components\MetaBox\Text',
+                        'component' => 'App\Components\MetaBox\DynamicList',
                         'single' => true,
                         'params' => [
 
@@ -100,7 +100,7 @@ return [
                     'test2' => [
                         'name' => 'test',
                         'label' => 'Title field2',
-                        'component' => 'App\Components\MetaBox\Text',
+                        'component' => 'App\Components\MetaBox\Constructor\Constructor',
                         'single' => true,
                         'params' => [
 
