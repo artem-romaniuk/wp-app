@@ -36,7 +36,7 @@ class Taxonomy
 
     public function register()
     {
-        $screen = $this->taxonomies['screen'];
+        $screen = isset($this->taxonomies['screen']) ? $this->taxonomies['screen'] : null;
 
         foreach ($this->taxonomies as $taxonomy => $params)
         {
