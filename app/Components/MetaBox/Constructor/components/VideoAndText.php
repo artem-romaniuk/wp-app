@@ -79,6 +79,7 @@ class VideoAndText
 
     public function handlerScript()
     {
+        /*
         add_action('admin_footer', function () { ?>
 
             <script type="text/javascript">
@@ -86,5 +87,6 @@ class VideoAndText
             </script>
 
         <?php });
+        */
     }
 }

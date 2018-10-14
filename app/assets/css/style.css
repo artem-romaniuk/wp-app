@@ -120,7 +120,7 @@
     }
 
     .name-component {
-        width: calc(100% - 155px);
+        width: calc(100% - 185px);
         font-size: 14px;
         font-weight: bolder;
     }
@@ -160,6 +160,11 @@
         justify-content: center;
     }
     /* End Header component */
+
+    .slide-up {
+        width: 20px;
+        height: 20px;
+    }
 
     /* Delete component button */
     .delete {
@@ -258,3 +263,7 @@
     }
     /*End Confirm delete window*/
 /* End MetaBox Constructor */
+
+.slide-up-true:before {
+    content: "\f140"!important;
+}

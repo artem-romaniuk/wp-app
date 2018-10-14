@@ -92,6 +92,10 @@ class Constructor extends BaseMetaBox
                 <button class="button delete-component-button"><?php _e('Delete'); ?></button>
             </div>
 
+            <div class="slide-up">
+                <span class="toggle-indicator"></span>
+            </div>
+
             <div class="title-block">
                 <input name="<?php echo $title['name']; ?>" placeholder="<?php _e('Title'); ?>" value="<?php echo $title['value']; ?>">
             </div>

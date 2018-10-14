@@ -41,6 +41,56 @@ function getItemId(items)
     return 1;
 }
 
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+function setCookie(name, value, options)
+{
+    options = options || {};
+
+    let expires = options.expires;
+
+    if (typeof expires == "number" && expires)
+    {
+        let d = new Date();
+        d.setTime(d.getTime() + expires * 1000);
+        expires = options.expires = d;
+    }
+
+    if (expires && expires.toUTCString)
+    {
+        options.expires = expires.toUTCString();
+    }
+
+    value = encodeURIComponent(value);
+
+    let updatedCookie = name + "=" + value;
+
+    for (let propName in options)
+    {
+        updatedCookie += "; " + propName;
+        let propValue = options[propName];
+        if (propValue !== true)
+        {
+            updatedCookie += "=" + propValue;
+        }
+    }
+
+    document.cookie = updatedCookie;
+}
+
+function deleteCookie(name)
+{
+    setCookie(name, '', {
+        expires: -1
+    })
+}
+
 
 /* Building MetaBox Constructor handler */
 jQuery(document).ready(function($)
@@ -187,5 +237,64 @@ jQuery(document).ready(function($)
         }
 
     });
+
+
+
+    /* Slide show/hide components */
+    const components = $('body').find('.component-container');
+
+    if (components.length > 0)
+    {
+        components.each(function ()
+        {
+            const component = $(this).attr('id');
+            const componentStatus = getCookie(component);
+            const indicator  = $(this).find('.toggle-indicator');
+            const body = $(this).find('.body-block');
+            const footer = $(this).find('.footer-block');
+
+            if (componentStatus)
+            {
+                if (componentStatus == 'hidden')
+                {
+                    indicator.addClass('slide-up-true');
+                    body.slideUp(0);
+                    footer.slideUp(0);
+                }
+                else
+                {
+                    indicator.removeClass('slide-up-true');
+                    body.slideDown(0);
+                    footer.slideDown(0);
+                }
+            }
+        });
+    }
+
+    $('.slide-up').on('click', function()
+    {
+        const component = $(this).parents('.component-container');
+        const componentId = component.attr('id');
+        const indicator  = $(this).find('.toggle-indicator');
+        const body = component.find('.body-block');
+        const footer = component.find('.footer-block');
+
+        if (indicator.hasClass('slide-up-true'))
+        {
+            setCookie(componentId, 'showed', {expires:3600, path:'/'});
+            indicator.removeClass('slide-up-true');
+            body.slideDown(0);
+            footer.slideDown(0);
+        }
+        else
+        {
+            setCookie(componentId, 'hidden', {expires:3600, path:'/'});
+            indicator.addClass('slide-up-true');
+            body.slideUp(0);
+            footer.slideUp(0);
+        }
+    });
+    /* End Slide show/hide components */
+
 });
 /* End Building MetaBox Constructor handler */

@@ -39,7 +39,7 @@ class DynamicList extends BaseMetaBox
         <script type="text/javascript">
             jQuery(document).ready(function($) {
 
-                const prefix = '<?php echo $this->name ?>';
+                const prefix = '<?php echo $this->name; ?>';
                 const placeholder = '<?php echo self::$placeholder; ?>';
 
                 $(document).on('click', '.add-' + prefix, function () {

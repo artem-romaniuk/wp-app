@@ -6,6 +6,9 @@ class DynamicList
 {
     public $name = 'Список';
 
+    protected static $placeholder = '#listElementId';
+
+
     public function html($key, $name, $value)
     {
         $types = [
@@ -33,23 +36,23 @@ class DynamicList
                     </select>
                 </label>
 
-                <div class="scope-list-element" style="display: none">
-                    <li data-id-element="#listElementId">
-                        <input type="text" name="<?php echo $list['name']; ?>[#listElementId]" value="" disabled="disabled">
+                <div style="display: none">
+                    <li data-item-id="<?php echo self::$placeholder; ?>" class="item-list-template">
+                        <input type="text" name="<?php echo $list['name']; ?>[<?php echo self::$placeholder; ?>]" disabled="disabled">
                         <button type="button" class="delete-list-element"><?php _e('Delete'); ?></button>
                     </li>
                 </div>
 
                 <ul class="list-elements-container">
                     <?php foreach ($list['value'] as $id => $value) : ?>
-                        <li data-id-element="<?php echo $id; ?>">
+                        <li data-item-id="<?php echo $id; ?>">
                             <input type="text" name="<?php echo $list['name']; ?>[<?php echo $id; ?>]" value="<?php echo $value; ?>">
                             <button type="button" class="delete-list-element"><?php _e('Delete'); ?></button>
                         </li>
                     <?php endforeach; ?>
                 </ul>
 
-                <button type="button" class="button button-secondary add-list-element"><?php _e('Add'); ?></button>
+                <button type="button" class="button button-secondary add-<?php echo $this->name ?>"><?php _e('Add'); ?></button>
             </div>
         </div>
 
@@ -81,67 +84,28 @@ class DynamicList
         add_action('admin_footer', function () { ?>
 
             <script type="text/javascript">
+                jQuery(document).ready(function($) {
 
-                $(function () {
+                    const prefix = '<?php echo $this->name; ?>';
+                    const placeholder = '<?php echo self::$placeholder; ?>';
 
-                    const listElementsContainer = $('.list-elements-container');
-                    const scopeListElement = $('.scope-list-element').find('li');
+                    $(document).on('click', '.add-' + prefix, function () {
+                        const container = $(this).parents('.list-elements-body');
+                        const itemTemplate = container.find('.item-list-template');
+                        const itemsContainer = container.find('.list-elements-container');
 
-                    $(document).on('click', '.add-list-element', function (e) {
+                        createItem(container, itemTemplate, itemsContainer, placeholder);
 
-                        e.preventDefault();
-
-                        const listElementsContainer = $(this)
-                            .parents('.component-container')
-                            .find('.list-elements-container');
-
-                        const listElement = $(this)
-                            .parents('.component-container')
-                            .find('.scope-list-element')
-                            .find('li');
-
-                        const cloneListElement = listElement
-                            .clone()[0]
-                            .outerHTML
-                            .replaceAll('#listElementId', computationListElementId(this));
-
-                        listElementsContainer.append(cloneListElement);
-
-                        listElementsContainer.find('input').each(function () {
+                        itemsContainer.find('input').each(function () {
                             $(this).prop('disabled', false);
                         });
                     });
 
-                    $(document).on('click', '.delete-list-element', function (e) {
-                        e.preventDefault();
-                        $(this)
-                            .parent()
-                            .remove();
+                    $(document).on('click', '.delete-list-element', function () {
+                        deleteItem($(this));
                     });
 
-                    function computationListElementId(object) {
-
-                        const listElements = $(object)
-                            .parents('.component-container')
-                            .find('.list-elements-container')
-                            .children();
-
-                        if (listElements.length > 0) {
-
-                            const arrayElements = [];
-
-                            for (let i = 0; i < listElements.length; i++) {
-                                let propertyValue = +$(listElements[i]).attr('data-id-element');
-
-                                arrayElements.push(propertyValue);
-                            }
-
-                            return Math.max.apply(null, arrayElements) + 1;
-                        }
-                        return 1;
-                    }
                 });
-
             </script>
 
         <?php });
