@@ -22,12 +22,12 @@ class MetaBoxCreator
         {
             if (isset($components['metas']))
             {
-                foreach ($components['metas'] as $box => &$metas)
+                foreach ($components['metas'] as $box => $metas)
                 {
                     $metas['screen'] = isset($metas['screen']) ? array_merge((array) $metas['screen'], (array) $screen) : (array) $screen;
-                }
 
-                $this->metas = $components['metas'];
+                    $this->metas[$box] = $metas;
+                }
             }
         }
     }
