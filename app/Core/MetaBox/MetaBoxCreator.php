@@ -99,10 +99,7 @@ class MetaBoxCreator
             $screen = $meta['screen'];
             $fields = $meta['fields'];
 
-            if (!$this->canSave($post, $screen, $id))
-            {
-                return;
-            }
+            if (!$this->canSave($post, $screen, $id)) continue;
 
             foreach ($fields as $field => $params)
             {
