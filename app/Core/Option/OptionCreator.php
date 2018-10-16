@@ -149,7 +149,13 @@ class OptionCreator
                     $name = $this->fullNameField($id, $field);
                     $label = $params['label'];
 
-                    register_setting($group, $name);
+                    register_setting($group, $name, [
+                        'type'              => 'string',
+                        'group'             => $group,
+                        'description'       => '',
+                        'sanitize_callback' => [$this, 'sanitize'],
+                        'show_in_rest'      => false,
+                    ]);
 
                     add_settings_field($name, $label, function () use ($componentClass, $name, $params) {
                         $value = $componentClass::beforeOutput(get_option($name));
@@ -159,6 +165,14 @@ class OptionCreator
                 }
             }
         }
+    }
+
+    public function sanitize($value)
+    {
+        if (is_string($value))
+            return htmlspecialchars($value);
+
+        return $value;
     }
 
     protected function fullNameField($id, $field)

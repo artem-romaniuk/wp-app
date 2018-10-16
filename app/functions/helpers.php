@@ -33,6 +33,21 @@ if (!function_exists('config')) {
 }
 
 
+if (!function_exists('appConfig')) {
+
+    function appConfig($key = null, $default = null)
+    {
+        $config = config('app');
+
+        if (is_null($key)) {
+            return $config;
+        }
+
+        return isset($config[$key]) ? $config[$key] : $default;
+    }
+}
+
+
 if (!function_exists('model')) {
 
     function model($key = null)
