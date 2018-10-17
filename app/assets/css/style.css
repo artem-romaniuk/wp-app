@@ -1,3 +1,23 @@
+.meta-boxes-container .form-group {
+    margin-bottom: 15px;
+}
+
+.meta-boxes-container label {
+    width: 100%;
+    display: block;
+    font-weight: bolder;
+}
+
+.meta-boxes-container textarea,
+.meta-boxes-container input {
+    width: 100%;
+}
+
+.meta-boxes-container textarea {
+    resize: none;
+    height: 150px;
+}
+
 
 /* Options container */
 .custom-options-container {
