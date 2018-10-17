@@ -35,17 +35,20 @@ class OptionCreator
 
     public function create()
     {
-        foreach ($this->scope as $page => $params)
+        foreach ($this->scope as $page => $options)
         {
             $method = 'on' . implode('', array_map(function ($item) {
-                return ucfirst($item);
+                    return ucfirst($item);
                 }, explode('_', $page)));
 
             if (method_exists($this, $method))
             {
-                $this->$method($page, $params);
+                foreach ($options as $params)
+                {
+                    $this->$method($page, $params);
 
-                $this->outputFields($page);
+                    $this->outputFields($page);
+                }
             }
         }
     }
@@ -100,19 +103,26 @@ class OptionCreator
 
     public function outputSection($page)
     {
+        $current_screen = get_current_screen();
+
         echo '<div class="custom-options-container">';
 
-        foreach ($this->scope[$page]['sections'] as $section)
-        {
-            $group = $section['group'];
+        foreach ($this->scope[$page] as $options) {
 
-            $action = ($this->locale != '') ? '?lang=' . trim($this->locale, '_') : '';
+            if ((isset($options['parent_slug']) && $current_screen->parent_file != $options['parent_slug']) || (isset($option['page_slug']) && $current_screen->parent_file != $options['page_slug'])) continue;
 
-            echo '<form action="options.php' . $action . '" method="post" class="custom-options-form">';
-            settings_fields($group);
-            do_settings_sections($group);
-            submit_button();
-            echo '</form>';
+            foreach ($options['sections'] as $section) {
+                $group = $section['group'];
+
+                $action = ($this->locale != '') ? '?lang=' . trim($this->locale, '_') : '';
+
+                echo '<form action="options.php' . $action . '" method="post" class="custom-options-form">';
+                settings_fields($group);
+                do_settings_sections($group);
+                submit_button();
+                echo '</form>';
+            }
+
         }
 
         echo '</div>';
@@ -127,41 +137,41 @@ class OptionCreator
 
     public function settingsField($page)
     {
-        $sections = $this->scope[$page]['sections'];
-
-        foreach ($sections as $id => $section)
+        foreach ($this->scope[$page] as $options)
         {
-            $label = $section['label'];
-            $group = $section['group'];
-            $fields = $section['fields'];
+            $sections = $options['sections'];
 
-            add_settings_section($id, $label, function () use($id, $section) {
-                $description = $section['description'];
-                echo '<span id="options_section_' . $id . '" class="option-section-description">' . $description . '</span>';
-            }, $group);
+            foreach ($sections as $id => $section) {
+                $label = $section['label'];
+                $group = $section['group'];
+                $fields = $section['fields'];
 
-            foreach ($fields as $field => $params)
-            {
-                $componentClass = $params['component'];
+                add_settings_section($id, $label, function () use ($id, $section) {
+                    $description = $section['description'];
+                    echo '<span id="options_section_' . $id . '" class="option-section-description">' . $description . '</span>';
+                }, $group);
 
-                if ($this->isComponentClass($componentClass))
-                {
-                    $name = $this->fullNameField($id, $field);
-                    $label = $params['label'];
+                foreach ($fields as $field => $params) {
+                    $componentClass = $params['component'];
 
-                    register_setting($group, $name, [
-                        'type'              => 'string',
-                        'group'             => $group,
-                        'description'       => '',
-                        'sanitize_callback' => [$this, 'sanitize'],
-                        'show_in_rest'      => false,
-                    ]);
+                    if ($this->isComponentClass($componentClass)) {
+                        $name = $this->fullNameField($id, $field);
+                        $label = $params['label'];
 
-                    add_settings_field($name, $label, function () use ($componentClass, $name, $params) {
-                        $value = $componentClass::beforeOutput(get_option($name));
-                        $params = $params['params'];
-                        (new $componentClass($name, $value, $params))->html();
-                    }, $group, $id);
+                        register_setting($group, $name, [
+                            'type' => 'string',
+                            'group' => $group,
+                            'description' => '',
+                            'sanitize_callback' => [$this, 'sanitize'],
+                            'show_in_rest' => false,
+                        ]);
+
+                        add_settings_field($name, $label, function () use ($componentClass, $name, $params) {
+                            $value = $componentClass::beforeOutput(get_option($name));
+                            $params = $params['params'];
+                            (new $componentClass($name, $value, $params))->html();
+                        }, $group, $id);
+                    }
                 }
             }
         }
