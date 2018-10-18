@@ -21,4 +21,9 @@ class Model
     {
         return new \WP_Query($arguments);
     }
+
+    protected function queryTerm(array $arguments = [])
+    {
+        return new \WP_Term_Query($arguments);
+    }
 }
