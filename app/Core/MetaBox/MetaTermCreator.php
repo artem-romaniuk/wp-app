@@ -2,7 +2,8 @@
 
 namespace App\Core\MetaBox;
 
-class MetaBoxCreator
+
+class MetaTermCreator
 {
     protected $scope;
 
@@ -20,13 +21,13 @@ class MetaBoxCreator
     {
         foreach ($this->scope as $screen => $components)
         {
-            if (isset($components['metas']['post']))
+            if (isset($components['metas']['term']))
             {
-                foreach ($components['metas']['post'] as $box => $metas)
+                foreach ($components['metas']['term'] as $box => $metas)
                 {
-                    $metas['screen'] = isset($metas['screen']) ? array_merge((array) $metas['screen'], (array) $screen) : (array) $screen;
+                    //$metas['screen'] = isset($metas['screen']) ? array_merge((array) $metas['screen'], (array) $screen) : (array) $screen;
 
-                    $this->metas[$box] = $metas;
+                    //$this->metas[$box] = $metas;
                 }
             }
         }
@@ -34,9 +35,9 @@ class MetaBoxCreator
 
     public function create()
     {
-        add_action('add_meta_boxes', [$this, 'register'], 10, 2);
+        //add_action('add_meta_boxes', [$this, 'register'], 10, 2);
 
-        add_action('save_post', [$this, 'save'], 10, 3);
+        //add_action('save_post', [$this, 'save'], 10, 3);
     }
 
     public function register()

@@ -33,7 +33,7 @@ class DynamicList extends BaseOption
             </div>
         </div>
 
-    <?php add_action('admin_footer', function () { ?>
+        <?php add_action('admin_footer', function () { ?>
 
         <script type="text/javascript">
             jQuery(document).ready(function($) {
@@ -47,6 +47,10 @@ class DynamicList extends BaseOption
                     const itemsContainer = container.find('.items-container');
 
                     createItem(container, itemTemplate, itemsContainer, placeholder);
+
+                    itemsContainer.find('input').each(function () {
+                        $(this).prop('disabled', false);
+                    });
                 });
 
                 $(document).on('click', '.delete-item', function () {

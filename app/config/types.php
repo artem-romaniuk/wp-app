@@ -149,7 +149,7 @@ return [
 
             ],
 
-            'taxonomy' => [
+            'term' => [
 
             ]
 
@@ -174,7 +174,7 @@ return [
 
             ],
 
-            'taxonomy' => [
+            'term' => [
 
             ],
 

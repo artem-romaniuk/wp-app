@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Core\MetaBox\MetaBoxCreator;
+use App\Core\MetaBox\MetaPostCreator;
+use App\Core\MetaBox\MetaTermCreator;
 use App\Core\Option\OptionCreator;
 use App\Core\PostType\PostType;
 use App\Core\Taxonomy\Taxonomy;
@@ -35,7 +36,10 @@ class AppServiceProvider implements ServiceProviderInterface
         };
 
         $container['meta_box'] = function ($container) {
-            $object = new MetaBoxCreator($container['config.types']);
+            $object = new MetaPostCreator($container['config.types']);
+            $object->create();
+
+            $object = new MetaTermCreator($container['config.types']);
             $object->create();
         };
     }
