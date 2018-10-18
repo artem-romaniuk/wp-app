@@ -119,31 +119,39 @@ return [
 
         'metas' => [
 
-            'test_group' => [
-                'label' => 'Boxes group Title',
-                'position' => 'normal',
-                'priority' => 'high',
-                'fields' => [
+            'post' => [
 
-                    'test' => [
-                        'label' => 'Title field',
-                        'component' => 'App\Components\MetaBox\DynamicList',
-                        'single' => true,
-                        'params' => [
+                'test_group' => [
+                    'label' => 'Boxes group Title',
+                    'position' => 'normal',
+                    'priority' => 'high',
+                    'fields' => [
 
-                        ]
+                        'test' => [
+                            'label' => 'Title field',
+                            'component' => 'App\Components\MetaBox\DynamicList',
+                            'single' => true,
+                            'params' => [
+
+                            ]
+                        ],
+                        'test2' => [
+                            'label' => 'Title field2',
+                            'component' => 'App\Components\MetaBox\Constructor\Constructor',
+                            'single' => true,
+                            'params' => [
+
+                            ]
+                        ],
+
                     ],
-                    'test2' => [
-                        'label' => 'Title field2',
-                        'component' => 'App\Components\MetaBox\Constructor\Constructor',
-                        'single' => true,
-                        'params' => [
-
-                        ]
-                    ],
-
                 ],
+
             ],
+
+            'taxonomy' => [
+
+            ]
 
         ]
 
@@ -162,7 +170,15 @@ return [
 
         'meta' => [
 
-        ]
+            'post' => [
+
+            ],
+
+            'taxonomy' => [
+
+            ],
+
+        ],
 
     ]
     */

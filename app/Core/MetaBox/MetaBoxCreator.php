@@ -20,9 +20,9 @@ class MetaBoxCreator
     {
         foreach ($this->scope as $screen => $components)
         {
-            if (isset($components['metas']))
+            if (isset($components['metas']['post']))
             {
-                foreach ($components['metas'] as $box => $metas)
+                foreach ($components['metas']['post'] as $box => $metas)
                 {
                     $metas['screen'] = isset($metas['screen']) ? array_merge((array) $metas['screen'], (array) $screen) : (array) $screen;
 
