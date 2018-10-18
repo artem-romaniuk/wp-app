@@ -109,7 +109,7 @@ class OptionCreator
 
         foreach ($this->scope[$page] as $options) {
 
-            if ((isset($options['parent_slug']) && $current_screen->parent_file != $options['parent_slug']) || (isset($options['page_slug']) && $current_screen->parent_file != $options['page_slug'])) continue;
+            if ((isset($options['parent_slug']) && $current_screen->parent_file != $options['parent_slug']) || (!isset($options['parent_slug']) && isset($options['page_slug']) && $current_screen->parent_file != $options['page_slug'])) continue;
 
             foreach ($options['sections'] as $section) {
                 $group = $section['group'];
