@@ -38,7 +38,7 @@ elseif ($queriedObject instanceof \WP_Post) {
     // Это стандартная страница произвольного типа записей
     else {
         $type = ucfirst($queriedObject->post_type);
-        $class = 'App\Controllers\\' . $queriedObject->post_type . 'Controller';
+        $class = 'App\Controllers\\' . $type . 'Controller';
         $make = class_exists($class) ? $class : $defaultController;
         $app->make($make)->single();
     }
