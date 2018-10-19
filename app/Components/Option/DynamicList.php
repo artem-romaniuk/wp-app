@@ -67,7 +67,7 @@ class DynamicList extends BaseOption
     {
         if (isset($value[self::$placeholder])) unset($value[self::$placeholder]);
 
-        return (array) $value;
+        return $value;
     }
 
     public static function beforeSave($value)

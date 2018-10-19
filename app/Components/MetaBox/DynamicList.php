@@ -62,7 +62,7 @@ class DynamicList extends BaseMetaBox
 
     public static function beforeOutput($value)
     {
-        return (array) $value;
+        return empty($value) ? [] : (array) $value;
     }
 
     public static function beforeSave($value)
