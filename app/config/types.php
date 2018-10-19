@@ -151,7 +151,29 @@ return [
 
             'term' => [
 
-            ]
+                'test' => [
+                    'taxonomy' => ['taxonomy_name_1'],
+                    'fields' => [
+                        'seo_title' => [
+                            'label' => 'SEO Заголовок',
+                            'component'  => 'App\Components\MetaBox\Text',
+                            'single' => true,
+                            'params' => [
+
+                            ]
+                        ],
+                        'seo_title1' => [
+                            'label' => 'SEO Заголовок',
+                            'component'  => 'App\Components\MetaBox\Text',
+                            'single' => true,
+                            'params' => [
+
+                            ],
+                        ],
+                    ],
+                ],
+
+            ],
 
         ]
 

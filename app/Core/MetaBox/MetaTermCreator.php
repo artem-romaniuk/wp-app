@@ -25,9 +25,7 @@ class MetaTermCreator
             {
                 foreach ($components['metas']['term'] as $box => $metas)
                 {
-                    //$metas['screen'] = isset($metas['screen']) ? array_merge((array) $metas['screen'], (array) $screen) : (array) $screen;
-
-                    //$this->metas[$box] = $metas;
+                    $this->metas[$box] = $metas;
                 }
             }
         }
@@ -35,52 +33,46 @@ class MetaTermCreator
 
     public function create()
     {
-        //add_action('add_meta_boxes', [$this, 'register'], 10, 2);
-
-        //add_action('save_post', [$this, 'save'], 10, 3);
-    }
-
-    public function register()
-    {
         foreach ($this->metas as $id => $meta)
         {
-            $label = $meta['label'];
-            $screen = $meta['screen'];
-            $position = $meta['position'];
-            $priority = $meta['priority'];
-            $fields = $meta['fields'];
+            foreach ((array) $meta['taxonomy'] as $taxonomy)
+            {
+                add_action($taxonomy . '_add_form_fields', [$this, 'outputBoxHtml'], 10, 2);
+                add_action($taxonomy . '_edit_form_fields', [$this, 'outputBoxHtml'], 10, 2);
 
-            add_meta_box($id, $label, [$this, 'outputBoxHtml'], $screen, $position, $priority, ['id' => $id, 'fields' => $fields]);
+                add_action('edit_term', [$this, 'save'], 10, 1);
+                add_action('create_' . $taxonomy, [$this, 'save']);
+            }
         }
     }
 
-    public function outputBoxHtml($post, $arguments)
+    public function outputBoxHtml($term)
     {
-        $id = $arguments['args']['id'];
-        $fields = $arguments['args']['fields'];
+        echo '<tr class="form-field custom-term-metas"><td colspan="2">';
 
-        wp_nonce_field($id, $id . '_wp_nonce', false, true);
-
-        echo '<div class="meta-boxes-container">';
-
-        foreach ($fields as $field => $params)
+        foreach ($this->metas as $id => $meta)
         {
-            $label = $params['label'];
-            $componentClass = $params['component'];
-            $single = $params['single'];
-            $params = $params['params'];
+            wp_nonce_field($id, $id . '_wp_nonce', false, true);
 
-            if ($this->isMetaBoxClass($componentClass))
+            foreach ((array) $meta['fields'] as $field => $params)
             {
-                $name = $this->fullNameField($id, $field);
+                $label = $params['label'];
+                $componentClass = $params['component'];
+                $single = $params['single'];
+                $params = $params['params'];
 
-                $value = $componentClass::beforeOutput(get_post_meta($post->ID, $name, $single));
+                if ($this->isMetaBoxClass($componentClass))
+                {
+                    $name = $this->fullNameField($id, $field);
 
-                (new $componentClass($name, $label, $value, $params))->html();
+                    $value = $componentClass::beforeOutput(get_metadata('term', $term->term_id, $name, $single));
+
+                    (new $componentClass($name, $label, $value, $params))->html();
+                }
             }
         }
 
-        echo '</div>';
+        echo '</td></tr>';
     }
 
     protected function fullNameField($id, $field)
@@ -93,14 +85,13 @@ class MetaTermCreator
         return class_exists($class);
     }
 
-    public function save($post_id, $post)
+    public function save($term_id)
     {
         foreach ($this->metas as $id => $meta)
         {
-            $screen = $meta['screen'];
             $fields = $meta['fields'];
 
-            if (!$this->canSave($post, $screen, $id)) continue;
+            if (!$this->canSave($id)) continue;
 
             foreach ($fields as $field => $params)
             {
@@ -117,17 +108,17 @@ class MetaTermCreator
 
                 if ($value)
                 {
-                    update_post_meta($post_id, $name, $value);
+                    update_metadata('term', $term_id, $name, $value);
                 }
                 else
                 {
-                    delete_post_meta($post_id, $name);
+                    delete_metadata('term', $term_id, $name);
                 }
             }
         }
     }
 
-    protected function canSave(\WP_Post $post, $name, $id)
+    protected function canSave($id)
     {
         if (!isset($_POST[$id . '_wp_nonce']))
         {
@@ -135,11 +126,6 @@ class MetaTermCreator
         }
 
         if (!wp_verify_nonce($_POST[$id . '_wp_nonce'], $id))
-        {
-            return false;
-        }
-
-        if (!in_array($post->post_type, (array) $name))
         {
             return false;
         }
