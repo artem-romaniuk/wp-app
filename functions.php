@@ -13,9 +13,4 @@ app('option');
 app('post_type');
 app('taxonomy');
 app('meta_box');
-
-
-
-
-
-
+app('widget');

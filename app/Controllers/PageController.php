@@ -14,11 +14,8 @@ class PageController extends Controller
 
     public function single()
     {
-
-        $all_pages = 'All pages';
-
         $this->view('page/single', [
-            'all' => $all_pages
+
         ]);
     }
 

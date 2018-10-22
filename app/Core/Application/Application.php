@@ -5,6 +5,7 @@ namespace App\Core\Application;
 use App\Core\Container\Container;
 use App\Providers\AppServiceProvider;
 use App\Providers\ModelServiceProvider;
+use App\Providers\WidgetServiceProvider;
 
 class Application
 {
@@ -35,6 +36,7 @@ class Application
     {
         $this->container->register(new AppServiceProvider());
         $this->container->register(new ModelServiceProvider());
+        $this->container->register(new WidgetServiceProvider());
     }
 
     protected function loadConfigurationFiles()

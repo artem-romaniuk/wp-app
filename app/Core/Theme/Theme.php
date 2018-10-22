@@ -21,6 +21,7 @@ class Theme
         add_action('after_setup_theme', [$this, 'setSupport']);
         add_action('after_setup_theme', [$this, 'registerNavMenu']);
         add_action('wp_enqueue_scripts', [$this, 'enqueueStyleAndScripts']);
+        add_action('widgets_init', [$this, 'sidebars']);
 
         /* Set styles and scripts in Admin panel */
         add_action('admin_enqueue_scripts', function() {
@@ -61,6 +62,19 @@ class Theme
                         $function($hook, $item[0], isset($item[1]) ? (int) $item[1] : 10);
                     }
                 }
+            }
+        }
+    }
+
+    public function sidebars()
+    {
+        if ($this->isConfig('sidebars'))
+        {
+            foreach ((array) $this->getConfig('sidebars') as $id => $params)
+            {
+                $params['id'] = $id;
+
+                register_sidebar($params);
             }
         }
     }

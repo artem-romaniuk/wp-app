@@ -37,6 +37,38 @@ post-formats    – блок форматов записи, если они вк
 
 return [
 
+    'page' => [
+
+        'metas' => [
+
+            'post' => [
+
+                'page_template' => [
+                    'label' => 'Шаблон страницы',
+                    'position' => 'normal',
+                    'priority' => 'high',
+                    'fields' => [
+
+                        'name' => [
+                            'label' => 'Шаблон',
+                            'component' => 'App\Components\MetaBox\Select',
+                            'single' => true,
+                            'params' => [
+                                'list' => [
+                                    'about' => 'О нас',
+                                    'contacts' => 'Контакты',
+                                ]
+                            ]
+                        ],
+
+                    ],
+                ],
+
+            ],
+        ],
+    ],
+
+
     'type_name_1' => [
 
         'type' => [

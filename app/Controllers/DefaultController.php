@@ -14,7 +14,7 @@ class DefaultController extends Controller
         $this->view('default/single');
     }
 
-    public function archive($taxonomy)
+    public function taxonomy($taxonomy)
     {
         $this->view('default/archive');
     }

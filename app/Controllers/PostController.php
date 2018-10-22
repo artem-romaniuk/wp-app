@@ -12,8 +12,8 @@ class PostController extends Controller
         $this->view('post/single');
     }
 
-    public function archive()
+    public function taxonomy()
     {
-        $this->view('post/archive');
+        $this->view('post/taxonomy');
     }
 }

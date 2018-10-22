@@ -46,12 +46,11 @@ elseif ($queriedObject instanceof \WP_Post) {
 }
 elseif ($queriedObject instanceof \WP_Term) {
 
-    $postType = ucfirst(get_post_type());
-    $taxonomy = $queriedObject->taxonomy;
-    $class = 'App\Controllers\\' . $postType . 'Controller';
+    $type = ucfirst(get_post_type());
+    $class = 'App\Controllers\\' . $type . 'Controller';
     $make = class_exists($class) ? $class : $defaultController;
 
-    $app->make($make)->archive($taxonomy);
+    $app->make($make)->taxonomy($queriedObject);
 }
 elseif ($queriedObject instanceof \WP_User) {
 

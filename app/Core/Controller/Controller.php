@@ -31,18 +31,10 @@ abstract class Controller
 
     protected function templateName()
     {
-        $id = get_queried_object_id();
+        $object = get_queried_object();
 
-        $pageName = get_query_var('pagename');
-
-        if (!$pageName && $id) {
-            $post = get_queried_object();
-
-            if ($post) {
-                $pageName = $post->post_name;
-            }
-        }
-
-        return $pageName ? urldecode($pageName) : ($id ? $id : '');
+        return ($object instanceof \WP_Post && isset($object->page_template_name))
+            ? strtolower($object->page_template_name)
+            : '';
     }
 }
