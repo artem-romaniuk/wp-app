@@ -8,8 +8,8 @@
     font-weight: bolder;
 }
 
-.meta-boxes-container textarea,
-.meta-boxes-container input {
+.meta-boxes-container .body-block textarea,
+.meta-boxes-container .body-block input {
     width: 100%;
 }
 
