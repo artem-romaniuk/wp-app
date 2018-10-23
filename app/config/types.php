@@ -45,8 +45,8 @@ return [
 
                 'page_template' => [
                     'label' => 'Шаблон страницы',
-                    'position' => 'normal',
-                    'priority' => 'high',
+                    'position' => 'side',
+                    'priority' => 'default',
                     'fields' => [
 
                         'name' => [
