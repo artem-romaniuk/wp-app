@@ -287,3 +287,28 @@
 .slide-up-true:before {
     content: "\f140"!important;
 }
+
+
+/* Gallery MetaBox */
+.gallery-meta-box ul {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.gallery-meta-box ul li .image-wrapper {
+    width: 150px;
+    height: auto;
+    margin: 5px;
+}
+
+.gallery-meta-box ul li .image-wrapper a {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.gallery-meta-box ul li .image-wrapper * {
+    width: 100%;
+}
+/* End Gallery MetaBox */

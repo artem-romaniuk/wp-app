@@ -175,6 +175,14 @@ return [
 
                             ]
                         ],
+                        'gallery' => [
+                            'label' => 'Изображения галереи',
+                            'component' => 'App\Components\MetaBox\Gallery',
+                            'single' => true,
+                            'params' => [
+
+                            ]
+                        ],
 
                     ],
                 ],

@@ -298,3 +298,61 @@ jQuery(document).ready(function($)
 
 });
 /* End Building MetaBox Constructor handler */
+
+
+/* For choise and remove images in MetaBox */
+function choiceImage(e, obj) {
+    e.preventDefault();
+
+    let frame;
+    let imageWrapper = $(obj).parents('.image-wrapper');
+
+    if (frame) {
+        frame.open();
+        return;
+    }
+
+    frame = wp.media.frames.questImgAdd = wp.media({
+        states: [
+            new wp.media.controller.Library({
+                //title: 'Добавить изображекние',
+                library: wp.media.query({type: 'image'}),
+                multiple: false
+                //date: false
+            })
+        ],
+        button: {
+            //text: '',
+        }
+    });
+
+    frame.on('select', function () {
+        const selected = frame
+            .state()
+            .get('selection')
+            .first()
+            .toJSON();
+        if (selected) {
+            imageWrapper.find('.image-id').val(selected.id);
+            imageWrapper.find('img').attr('src', selected.sizes.thumbnail.url);
+        }
+    });
+
+    frame.on('open', function () {
+        const imageID = imageWrapper.find('.image-id').val();
+        if (imageID) {
+            frame
+                .state()
+                .get('selection')
+                .add(wp.media.attachment(imageID));
+        }
+    });
+    frame.open();
+}
+
+function removeImage(obj) {
+
+    $(obj).parent().find('.image-id').val('0');
+    $(obj).parent().find('img').attr('src', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAQMAAABKLAcXAAAABlBMVEUAAAC7u7s37rVJAAAAAXRSTlMAQObYZgAAACJJREFUOMtjGAV0BvL/G0YMr/4/CDwY0rzBFJ704o0CWgMAvyaRh+c6m54AAAAASUVORK5CYII=');
+}
+/* End For choise and remove images in MetaBox */
