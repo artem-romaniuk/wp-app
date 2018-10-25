@@ -26,7 +26,7 @@ class Gallery extends BaseMetaBox
 
                             <button type="button" class="button button-secondary remove-image"><?php _e('Remove'); ?></button>
 
-                            <input type="hidden" name="<?php echo $this->name; ?>[<?php echo self::$placeholder; ?>]" class="image-id" disabled>
+                            <input type="hidden" name="<?php echo $this->name; ?>[<?php echo self::$placeholder; ?>]" class="image-id"
                         </div>
                     </li>
                 </ul>
@@ -66,8 +66,6 @@ class Gallery extends BaseMetaBox
                     const itemsContainer = container.find('.items-container');
 
                     createItem(container, itemTemplate, itemsContainer, placeholder);
-
-                    $(itemsContainer).find('input').prop('disabled', false);
                 });
 
                 $(document).on('click', '.remove-image', function () {
@@ -92,6 +90,8 @@ class Gallery extends BaseMetaBox
 
     public static function beforeSave($value)
     {
+        if (isset($value[self::$placeholder])) unset($value[self::$placeholder]);
+
         return $value;
     }
 }

@@ -6,6 +6,9 @@ class ImageAndText
 {
     public $name = 'Картинка и текст';
 
+    protected static $defaultImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAQMAAABKLAcXAAAABlBMVEUAAAC7u7s37rVJAAAAAXRSTlMAQObYZgAAACJJREFUOMtjGAV0BvL/G0YMr/4/CDwY0rzBFJ704o0CWgMAvyaRh+c6m54AAAAASUVORK5CYII=';
+
+
     public function html($key, $name, $value)
     {
         $positions = [
@@ -26,10 +29,6 @@ class ImageAndText
             'name' => $name . '[' . $key . '][content][image][id]',
             'value' => isset($value['content']['image']['id']) ? $value['content']['image']['id'] : '0'
         ];
-        $image_src = [
-            'name' => $name . '[' . $key . '][content][image][src]',
-            'value' => $image_id['value'] !== '0' ? wp_get_attachment_image_url($image_id['value'], 'thumbnail') : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAQMAAABKLAcXAAAABlBMVEUAAAC7u7s37rVJAAAAAXRSTlMAQObYZgAAACJJREFUOMtjGAV0BvL/G0YMr/4/CDwY0rzBFJ704o0CWgMAvyaRh+c6m54AAAAASUVORK5CYII='
-        ];
         ?>
 
         <div class="body-block">
@@ -43,13 +42,12 @@ class ImageAndText
 
                 <div class="image-wrapper">
                     <a class="attach-image" href="#">
-                        <img src="<?php echo $image_src['value']; ?>" alt="">
+                        <img src="<?php echo $image_id['value'] != 0 ? wp_get_attachment_image_url($image_id['value'], 'thumbnail') : self::$defaultImage; ?>" alt="">
                     </a>
 
-                    <button type="button" class="button button-secondary remove-image"><?php _e('Remove'); ?></button>
+                    <button type="button" class="button button-secondary delete-image"><?php _e('Remove'); ?></button>
 
                     <input type="hidden" name="<?php echo $image_id['name']; ?>" value="<?php echo $image_id['value']; ?>" class="image-id">
-                    <input type="hidden" name="<?php echo $image_src['name']; ?>" value="<?php echo $image_src['value']; ?>" class="image-src">
                 </div>
             </div>
 
@@ -89,7 +87,7 @@ class ImageAndText
                     height: 100%!important;
                 }
 
-                .remove-image {
+                .delete-image {
                     width: 200px;
                     margin: 0 auto;
                 }
@@ -109,62 +107,10 @@ class ImageAndText
                     $(document).on('click', '.attach-image', function (e) {
                         choiceImage(e, this);
                     });
-                    $(document).on('click', '.remove-image', function () {
+                    $(document).on('click', '.delete-image', function () {
                         removeImage(this);
                     });
                 });
-
-                function choiceImage(e, obj) {
-                    e.preventDefault();
-
-                    let frame;
-                    let imageWrapper = $(obj).parents('.image-wrapper');
-
-                    if (frame) {
-                        frame.open();
-                        return;
-                    }
-                    frame = wp.media.frames.questImgAdd = wp.media({
-                        states: [
-                            new wp.media.controller.Library({
-                                //title: 'Добавить изображекние',
-                                library: wp.media.query({type: 'image'}),
-                                multiple: false
-                                //date: false
-                            })
-                        ],
-                        button: {
-                            //text: '',
-                        }
-                    });
-                    frame.on('select', function () {
-                        const selected = frame
-                            .state()
-                            .get('selection')
-                            .first()
-                            .toJSON();
-                        if (selected) {
-                            imageWrapper.find('.image-id').val(selected.id);
-                            imageWrapper.find('img').attr('src', selected.sizes.thumbnail.url);
-                        }
-                    });
-                    frame.on('open', function () {
-                        const imageID = imageWrapper.find('.image-id').val();
-                        if (imageID) {
-                            frame
-                                .state()
-                                .get('selection')
-                                .add(wp.media.attachment(imageID));
-                        }
-                    });
-                    frame.open();
-                }
-
-                function removeImage(obj) {
-
-                    $(obj).parent().find('.image-id').val('0');
-                    $(obj).parent().find('img').attr('src', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAQMAAABKLAcXAAAABlBMVEUAAAC7u7s37rVJAAAAAXRSTlMAQObYZgAAACJJREFUOMtjGAV0BvL/G0YMr/4/CDwY0rzBFJ704o0CWgMAvyaRh+c6m54AAAAASUVORK5CYII=');
-                }
 
             </script>
 
