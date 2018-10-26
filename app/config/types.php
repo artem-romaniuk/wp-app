@@ -153,7 +153,7 @@ return [
 
             'post' => [
 
-                'test_group' => [
+                'test_group_111' => [
                     'label' => 'Boxes group Title',
                     'position' => 'normal',
                     'priority' => 'high',

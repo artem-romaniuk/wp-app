@@ -9,11 +9,21 @@ class PostController extends Controller
 {
     public function single()
     {
-        $this->view('post/single');
+        global $wp_query;
+
+        $this->view('post/single', [
+            'page' => $wp_query->post,
+            'article' => $wp_query->post
+        ]);
     }
 
     public function taxonomy()
     {
-        $this->view('post/taxonomy');
+        global $wp_query;
+
+        $this->view('post/taxonomy', [
+            'page' => get_post(get_option('page_for_posts')),
+            'articles' => $wp_query->posts
+        ]);
     }
 }

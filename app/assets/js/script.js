@@ -300,7 +300,7 @@ jQuery(document).ready(function($)
 /* End Building MetaBox Constructor handler */
 
 
-/* For choise and remove images in MetaBox */
+/* For choice and remove images in MetaBox */
 function choiceImage(e, obj) {
     e.preventDefault();
 
@@ -355,4 +355,4 @@ function removeImage(obj) {
     $(obj).parent().find('.image-id').val('0');
     $(obj).parent().find('img').attr('src', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAQMAAABKLAcXAAAABlBMVEUAAAC7u7s37rVJAAAAAXRSTlMAQObYZgAAACJJREFUOMtjGAV0BvL/G0YMr/4/CDwY0rzBFJ704o0CWgMAvyaRh+c6m54AAAAASUVORK5CYII=');
 }
-/* End For choise and remove images in MetaBox */
+/* End For choice and remove images in MetaBox */

@@ -44,10 +44,11 @@ class ImageAndText
                     <a class="attach-image" href="#">
                         <img src="<?php echo $image_id['value'] != 0 ? wp_get_attachment_image_url($image_id['value'], 'thumbnail') : self::$defaultImage; ?>" alt="">
                     </a>
-
-                    <button type="button" class="button button-secondary delete-image"><?php _e('Remove'); ?></button>
-
                     <input type="hidden" name="<?php echo $image_id['name']; ?>" value="<?php echo $image_id['value']; ?>" class="image-id">
+
+                    <button type="button" class="button button-secondary delete-image">
+                        <?php _e('Remove'); ?>
+                    </button>
                 </div>
             </div>
 
@@ -105,10 +106,10 @@ class ImageAndText
 
                 $(function () {
                     $(document).on('click', '.attach-image', function (e) {
-                        choiceImage(e, this);
+                        choiceImage(e, $(this));
                     });
                     $(document).on('click', '.delete-image', function () {
-                        removeImage(this);
+                        removeImage($(this));
                     });
                 });
 

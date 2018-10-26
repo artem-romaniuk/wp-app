@@ -14,14 +14,21 @@ class PageController extends Controller
 
     public function single()
     {
-        $this->view('page/single', [
+        global $wp_query;
 
+        $this->view('page/single', [
+            'page' => $wp_query->post
         ]);
     }
 
     public function posts()
     {
-        $this->view('page/posts');
+        global $wp_query;
+
+        $this->view('page/posts', [
+            'page' => get_post(get_option('page_for_posts')),
+            'articles' => $wp_query->posts
+        ]);
     }
 
     public function notFound()

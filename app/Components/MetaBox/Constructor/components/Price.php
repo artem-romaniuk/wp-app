@@ -26,7 +26,9 @@ class Price
                         <input type="text" placeholder="<?php _e('Валюта'); ?>" class="price-currency" name="<?php echo $price['name']; ?>[<?php echo self::$placeholder; ?>][currency]" disabled="disabled">
                         <input type="text" placeholder="<?php _e('Комментарий'); ?>" class="price-comment" name="<?php echo $price['name']; ?>[<?php echo self::$placeholder; ?>][comment]" disabled="disabled">
 
-                        <button type="button" class="delete-price-element"><?php _e('Delete'); ?></button>
+                        <button type="button" class="delete-price-element">
+                            <?php _e('Delete'); ?>
+                        </button>
                     </li>
                 </div>
 
@@ -37,7 +39,9 @@ class Price
                             <input type="text" placeholder="<?php _e('Валюта'); ?>" class="price-currency" name="<?php echo $price['name']; ?>[<?php echo $id; ?>][currency]" value="<?php echo $value['currency']; ?>">
                             <input type="text" placeholder="<?php _e('Комментарий'); ?>" class="price-duration" name="<?php echo $price['name']; ?>[<?php echo $id; ?>][comment]" value="<?php echo $value['comment']; ?>">
 
-                            <button type="button" class="delete-price-element"><?php _e('Delete'); ?></button>
+                            <button type="button" class="delete-price-element">
+                                <?php _e('Delete'); ?>
+                            </button>
                         </li>
                     <?php endforeach; ?>
                 </ul>

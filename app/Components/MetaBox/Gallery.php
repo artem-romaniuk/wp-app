@@ -20,13 +20,14 @@ class Gallery extends BaseMetaBox
                 <ul style="display: none;">
                     <li data-item-id="<?php echo self::$placeholder; ?>" class="item-template">
                         <div class="image-wrapper">
-                            <a class="attach-image" href="#">
+                            <a class="attach-image-<?php echo $this->name; ?>" href="#">
                                 <img src="<?php echo self::$defaultImage; ?>" alt="">
                             </a>
+                            <input type="hidden" name="<?php echo $this->name; ?>[<?php echo self::$placeholder; ?>]" class="image-id">
 
-                            <button type="button" class="button button-secondary remove-image"><?php _e('Remove'); ?></button>
-
-                            <input type="hidden" name="<?php echo $this->name; ?>[<?php echo self::$placeholder; ?>]" class="image-id"
+                            <button type="button" class="button button-secondary remove-image remove-image-<?php echo $this->name; ?>">
+                                <?php _e('Remove'); ?>
+                            </button>
                         </div>
                     </li>
                 </ul>
@@ -35,19 +36,20 @@ class Gallery extends BaseMetaBox
                     <?php foreach ($this->value as $id => $value) : ?>
                         <li data-item-id="<?php echo $id; ?>">
                             <div class="image-wrapper">
-                                <a class="attach-image" href="#">
+                                <a class="attach-image-<?php echo $this->name; ?>" href="#">
                                     <img src="<?php echo $value != 0 ? wp_get_attachment_image_url($value, 'thumbnail') : self::$defaultImage; ?>" alt="">
                                 </a>
-
-                                <button type="button" class="button button-secondary remove-image"><?php _e('Remove'); ?></button>
-
                                 <input type="hidden" name="<?php echo $this->name; ?>[<?php echo $id; ?>]" value="<?php echo $value; ?>" class="image-id">
+
+                                <button type="button" class="button button-secondary remove-image remove-image-<?php echo $this->name; ?>">
+                                    <?php _e('Remove'); ?>
+                                </button>
                             </div>
                         </li>
                     <?php endforeach; ?>
                 </ul>
 
-                <button type="button" class="button button-add add-<?php echo $this->name ?>"><?php _e('Add'); ?></button>
+                <button type="button" class="button button-add add-<?php echo $this->name; ?>"><?php _e('Add'); ?></button>
             </div>
         </div>
 
@@ -68,12 +70,12 @@ class Gallery extends BaseMetaBox
                     createItem(container, itemTemplate, itemsContainer, placeholder);
                 });
 
-                $(document).on('click', '.remove-image', function () {
+                $(document).on('click', '.remove-image-' + prefix, function () {
                     removeImage($(this));
                     deleteItem($(this));
                 });
 
-                $(document).on('click', '.attach-image', function (e) {
+                $(document).on('click', '.attach-image-' + prefix, function (e) {
                     choiceImage(e, $(this));
                 });
 

@@ -56,3 +56,10 @@ elseif ($queriedObject instanceof \WP_User) {
 
     $app->make($defaultController)->user();
 }
+elseif (is_year() || is_month() || is_day()) {
+
+    $class = 'App\Controllers\PostController';
+    $make = class_exists($class) ? $class : $defaultController;
+
+    $app->make($make)->taxonomy(null);
+}
