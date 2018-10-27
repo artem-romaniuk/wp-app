@@ -1,1 +1,1 @@
-Post Taxonomy
+Post Taxonomy (PostController)

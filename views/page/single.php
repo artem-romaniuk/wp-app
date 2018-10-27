@@ -1,1 +1,1 @@
-Single page
+Single page (PageController)

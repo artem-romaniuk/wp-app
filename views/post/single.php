@@ -1,1 +1,1 @@
-Single post
+Single post (PostController)

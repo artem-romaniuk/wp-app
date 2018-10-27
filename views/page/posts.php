@@ -1,1 +1,1 @@
-Page with posts
+Page with posts (PageController)
