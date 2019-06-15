@@ -17,16 +17,11 @@ class OptionCreator
 
     protected function setLocale()
     {
-        if (isset($_GET['lang']) && $_GET['lang'] != 'all')
-        {
+        if (isset($_GET['lang']) && $_GET['lang'] != 'all') {
             $locale = strtolower($_GET['lang']);
-        }
-        elseif (function_exists('icl_get_default_language'))
-        {
+        } elseif (function_exists('icl_get_default_language')) {
             $locale = icl_get_default_language();
-        }
-        else
-        {
+        } else {
             $locale = '';
         }
 
@@ -35,16 +30,13 @@ class OptionCreator
 
     public function create()
     {
-        foreach ($this->scope as $page => $options)
-        {
+        foreach ($this->scope as $page => $options) {
             $method = 'on' . implode('', array_map(function ($item) {
                     return ucfirst($item);
                 }, explode('_', $page)));
 
-            if (method_exists($this, $method))
-            {
-                foreach ($options as $params)
-                {
+            if (method_exists($this, $method)) {
+                foreach ($options as $params) {
                     $this->$method($page, $params);
 
                     $this->outputFields($page);
@@ -56,7 +48,6 @@ class OptionCreator
     public function onMenuPage($page, array $params)
     {
         add_action('admin_menu', function() use($page, $params) {
-
             $page_title = $params['page_title'];
             $menu_label = $params['menu_label'];
             $capability = $params['capability'];
@@ -73,7 +64,6 @@ class OptionCreator
     public function onSubmenuPage($page, array $params)
     {
         add_action('admin_menu', function() use($page, $params) {
-
             $parent_slug = $params['parent_slug'];
             $page_title = $params['page_title'];
             $menu_label = $params['menu_label'];
@@ -89,7 +79,6 @@ class OptionCreator
     public function onThemePage($page, array $params)
     {
         add_action('admin_menu', function() use($page, $params) {
-
             $page_title = $params['page_title'];
             $menu_label = $params['menu_label'];
             $capability = $params['capability'];
@@ -137,8 +126,7 @@ class OptionCreator
 
     public function settingsField($page)
     {
-        foreach ($this->scope[$page] as $options)
-        {
+        foreach ($this->scope[$page] as $options) {
             $sections = $options['sections'];
 
             foreach ($sections as $id => $section) {

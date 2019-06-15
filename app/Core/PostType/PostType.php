@@ -18,10 +18,8 @@ class PostType
 
     public function register()
     {
-        foreach ($this->scope as $name => $components)
-        {
-            if (isset($components['type']))
-            {
+        foreach ($this->scope as $name => $components) {
+            if (isset($components['type']))  {
                 register_post_type($name, $components['type']);
             }
         }

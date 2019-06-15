@@ -19,6 +19,7 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "pimple/pimple": "^3.0"
+        "pimple/pimple": "^3.0",
+        "league/pipeline": "^1.0"
     }
 }

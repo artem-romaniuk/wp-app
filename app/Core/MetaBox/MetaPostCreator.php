@@ -8,7 +8,6 @@ class MetaPostCreator
 
     protected $metas = [];
 
-
     public function __construct(array $scope = [])
     {
         $this->scope = $scope;
@@ -18,12 +17,9 @@ class MetaPostCreator
 
     protected function normalize()
     {
-        foreach ($this->scope as $screen => $components)
-        {
-            if (isset($components['metas']['post']))
-            {
-                foreach ($components['metas']['post'] as $box => $metas)
-                {
+        foreach ($this->scope as $screen => $components) {
+            if (isset($components['metas']['post'])) {
+                foreach ($components['metas']['post'] as $box => $metas) {
                     $metas['screen'] = isset($metas['screen']) ? array_merge((array) $metas['screen'], (array) $screen) : (array) $screen;
 
                     $this->metas[$box] = $metas;
@@ -41,8 +37,7 @@ class MetaPostCreator
 
     public function register()
     {
-        foreach ($this->metas as $id => $meta)
-        {
+        foreach ($this->metas as $id => $meta) {
             $label = $meta['label'];
             $screen = $meta['screen'];
             $position = $meta['position'];
@@ -62,15 +57,13 @@ class MetaPostCreator
 
         echo '<div class="meta-boxes-container">';
 
-        foreach ($fields as $field => $params)
-        {
+        foreach ($fields as $field => $params) {
             $label = $params['label'];
             $componentClass = $params['component'];
             $single = $params['single'];
             $params = $params['params'];
 
-            if ($this->isMetaBoxClass($componentClass))
-            {
+            if ($this->isMetaBoxClass($componentClass)) {
                 $name = $this->fullNameField($id, $field);
 
                 $value = $componentClass::beforeOutput(get_post_meta($post->ID, $name, $single));
@@ -94,32 +87,26 @@ class MetaPostCreator
 
     public function save($post_id, $post)
     {
-        foreach ($this->metas as $id => $meta)
-        {
+        foreach ($this->metas as $id => $meta) {
             $screen = $meta['screen'];
             $fields = $meta['fields'];
 
             if (!$this->canSave($post, $screen, $id)) continue;
 
-            foreach ($fields as $field => $params)
-            {
+            foreach ($fields as $field => $params) {
                 $typeClass = $params['component'];
 
                 $name = $this->fullNameField($id, $field);
 
                 $value = null;
 
-                if ($this->isMetaBoxClass($typeClass))
-                {
+                if ($this->isMetaBoxClass($typeClass)) {
                     $value = $typeClass::beforeSave($_POST[$name]);
                 }
 
-                if ($value)
-                {
+                if ($value) {
                     update_post_meta($post_id, $name, $value);
-                }
-                else
-                {
+                } else {
                     delete_post_meta($post_id, $name);
                 }
             }
@@ -128,18 +115,15 @@ class MetaPostCreator
 
     protected function canSave(\WP_Post $post, $name, $id)
     {
-        if (!isset($_POST[$id . '_wp_nonce']))
-        {
+        if (!isset($_POST[$id . '_wp_nonce'])) {
             return false;
         }
 
-        if (!wp_verify_nonce($_POST[$id . '_wp_nonce'], $id))
-        {
+        if (!wp_verify_nonce($_POST[$id . '_wp_nonce'], $id)) {
             return false;
         }
 
-        if (!in_array($post->post_type, (array) $name))
-        {
+        if (!in_array($post->post_type, (array) $name)) {
             return false;
         }
 

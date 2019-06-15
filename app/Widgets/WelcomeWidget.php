@@ -9,9 +9,7 @@ class WelcomeWidget extends \WP_Widget
             'Приветствия',
             ['description' => 'Виджет с приветствием']
         );
-
     }
-
 
     function widget($args, $instance)
     {
@@ -88,5 +86,4 @@ class WelcomeWidget extends \WP_Widget
         </p>
         <?php
     }
-
 }

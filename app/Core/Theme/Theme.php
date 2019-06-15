@@ -8,7 +8,6 @@ class Theme
 {
     protected $container;
 
-
     public function __construct(Container $container)
     {
         $this->container = $container;
@@ -47,18 +46,14 @@ class Theme
 
     public function removing()
     {
-        if ($this->isConfig('remove'))
-        {
-            foreach ((array) $this->getConfig('remove') as $handler => $data)
-            {
+        if ($this->isConfig('remove')) {
+            foreach ((array) $this->getConfig('remove') as $handler => $data) {
                 $function = 'remove_' . $handler;
 
                 if (!function_exists($function)) continue;
 
-                foreach ($data as $hook => $removing)
-                {
-                    foreach ($removing as $item)
-                    {
+                foreach ($data as $hook => $removing) {
+                    foreach ($removing as $item) {
                         $function($hook, $item[0], isset($item[1]) ? (int) $item[1] : 10);
                     }
                 }
@@ -68,10 +63,8 @@ class Theme
 
     public function sidebars()
     {
-        if ($this->isConfig('sidebars'))
-        {
-            foreach ((array) $this->getConfig('sidebars') as $id => $params)
-            {
+        if ($this->isConfig('sidebars')) {
+            foreach ((array) $this->getConfig('sidebars') as $id => $params) {
                 $params['id'] = $id;
 
                 register_sidebar($params);
@@ -81,10 +74,8 @@ class Theme
 
     public function setSupport()
     {
-        if ($this->isConfig('support'))
-        {
-            foreach ((array) $this->getConfig('support') as $name => $support)
-            {
+        if ($this->isConfig('support')) {
+            foreach ((array) $this->getConfig('support') as $name => $support) {
                 is_array($support) ? add_theme_support($name, $support) : add_theme_support($support);
             }
         }
@@ -98,22 +89,18 @@ class Theme
 
     protected function enqueueStyle()
     {
-        if ($this->isConfig('style'))
-        {
-            foreach ((array) $this->getConfig('style')['set'] as $handle => $params)
-            {
+        if ($this->isConfig('style')) {
+            foreach ((array) $this->getConfig('style')['set'] as $handle => $params) {
                 wp_enqueue_style($handle, $this->getSrcResource($params['src']), $params['dependence'], $params['version'], $params['media']);
 
-                if (isset($params['inline']))
-                {
+                if (isset($params['inline'])) {
                     wp_add_inline_style($handle, $params['inline']);
                 }
             }
 
             wp_enqueue_style('default-theme', get_stylesheet_uri());
 
-            foreach ((array) $this->getConfig('style')['unset'] as $handle)
-            {
+            foreach ((array) $this->getConfig('style')['unset'] as $handle) {
                 wp_deregister_style($handle);
             }
         }
@@ -121,20 +108,16 @@ class Theme
 
     protected function enqueueScripts()
     {
-        if ($this->isConfig('script'))
-        {
-            foreach ((array) $this->getConfig('script')['set'] as $handle => $params)
-            {
+        if ($this->isConfig('script')) {
+            foreach ((array) $this->getConfig('script')['set'] as $handle => $params) {
                 wp_enqueue_script($handle, $this->getSrcResource($params['src']), $params['dependence'], $params['version'], $params['in_footer']);
 
-                if (isset($params['localize']))
-                {
+                if (isset($params['localize'])) {
                     wp_localize_script($handle, $params['localize'][0], $params['localize'][1]);
                 }
             }
 
-            foreach ((array) $this->getConfig('script')['unset'] as $handle)
-            {
+            foreach ((array) $this->getConfig('script')['unset'] as $handle) {
                 wp_deregister_script($handle);
             }
         }
@@ -142,10 +125,8 @@ class Theme
 
     public function setImageSize()
     {
-        if ($this->isConfig('image') && function_exists('add_image_size'))
-        {
-            foreach ((array) $this->getConfig('image') as $name => $params)
-            {
+        if ($this->isConfig('image') && function_exists('add_image_size')) {
+            foreach ((array) $this->getConfig('image') as $name => $params) {
                 add_image_size($name, $params['width'], $params['height'], $params['crop']);
             }
         }
@@ -153,20 +134,17 @@ class Theme
 
     public function registerNavMenu()
     {
-        if ($this->isConfig('menu') && function_exists('register_nav_menus'))
-        {
+        if ($this->isConfig('menu') && function_exists('register_nav_menus')) {
             register_nav_menus((array) $this->getConfig('menu'));
         }
     }
 
     public function setLangDirectory()
     {
-        if ($this->isConfig('app'))
-        {
+        if ($this->isConfig('app')) {
             $directory = $this->container['path.base'] . DIRECTORY_SEPARATOR . trim($this->getConfig('app')['languages_path'], '/');
 
-            if (!is_dir($directory))
-            {
+            if (!is_dir($directory)) {
                 mkdir($directory, 0775);
             }
 

@@ -2,11 +2,8 @@
 
 use App\Core\Container\Container;
 
-
 if (!function_exists('app')) {
-
-    function app($abstract = null)
-    {
+    function app($abstract = null) {
         if (is_null($abstract)) {
             return Container::getInstance();
         }
@@ -17,11 +14,8 @@ if (!function_exists('app')) {
     }
 }
 
-
 if (!function_exists('config')) {
-
-    function config($key = null, $default = null)
-    {
+    function config($key = null, $default = null) {
         if (is_null($key)) {
             return Container::getInstance();
         }
@@ -32,11 +26,8 @@ if (!function_exists('config')) {
     }
 }
 
-
 if (!function_exists('appConfig')) {
-
-    function appConfig($key = null, $default = null)
-    {
+    function appConfig($key = null, $default = null) {
         $config = config('app');
 
         if (is_null($key)) {
@@ -47,11 +38,8 @@ if (!function_exists('appConfig')) {
     }
 }
 
-
 if (!function_exists('model')) {
-
-    function model($key = null)
-    {
+    function model($key = null) {
         if (is_null($key)) {
             return Container::getInstance();
         }

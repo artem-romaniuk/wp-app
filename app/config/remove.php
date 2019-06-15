@@ -18,6 +18,8 @@ return [
             ['wp_oembed_add_discovery_links'],
             ['print_emoji_detection_script', 7],
             ['rest_output_link_wp_head',],
+            ['wp_oembed_add_discovery_links'],
+            ['wp_oembed_add_host_js']
         ],
 
         'template_redirect' => [

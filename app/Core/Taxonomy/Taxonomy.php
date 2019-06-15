@@ -8,7 +8,6 @@ class Taxonomy
 
     protected $taxonomies = [];
 
-
     public function __construct(array $scope = [])
     {
         $this->scope = $scope;
@@ -18,10 +17,8 @@ class Taxonomy
 
     protected function normalize()
     {
-        foreach ($this->scope as $screen => $components)
-        {
-            if (isset($components['taxonomies']))
-            {
+        foreach ($this->scope as $screen => $components) {
+            if (isset($components['taxonomies'])) {
                 $components['taxonomies']['screen'] = $screen;
 
                 $this->taxonomies = $components['taxonomies'];
@@ -38,8 +35,7 @@ class Taxonomy
     {
         $screen = isset($this->taxonomies['screen']) ? $this->taxonomies['screen'] : null;
 
-        foreach ($this->taxonomies as $taxonomy => $params)
-        {
+        foreach ($this->taxonomies as $taxonomy => $params) {
             if ($taxonomy == 'screen') continue;
 
             register_taxonomy($taxonomy, (array) $screen, $params);

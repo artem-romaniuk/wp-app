@@ -8,7 +8,6 @@ class Container extends PimpleContainer
 {
     public static $instance;
 
-
     public static function setInstance(array $values = [])
     {
         return static::$instance = new static($values);
@@ -16,8 +15,7 @@ class Container extends PimpleContainer
 
     public static function getInstance()
     {
-        if (is_null(static::$instance))
-        {
+        if (is_null(static::$instance)) {
             static::$instance = new static;
         }
 

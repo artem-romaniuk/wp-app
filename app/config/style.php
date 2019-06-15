@@ -18,9 +18,7 @@ return [
     ],
 
     'unset' => [
-
-        //'handler_name'
-
+        'wp-block-library',
     ]
 
 ];

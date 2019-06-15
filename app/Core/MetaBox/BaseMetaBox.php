@@ -12,7 +12,6 @@ abstract class BaseMetaBox
 
     protected $params;
 
-
     public function __construct($name, $label, $value, array $params = [])
     {
         $this->name = $name;

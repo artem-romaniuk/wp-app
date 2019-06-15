@@ -5,19 +5,16 @@ namespace App\Providers;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
-
 class WidgetServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $container)
     {
         $container['widget'] = function ($container) {
-
             require_once $container['path.app'] . DIRECTORY_SEPARATOR . 'Widgets' . DIRECTORY_SEPARATOR . 'WelcomeWidget.php';
 
             add_action('widgets_init', function() {
 
                 register_widget('WelcomeWidget');
-
 
                 unregister_widget('WP_Widget_Archives');
                 unregister_widget('WP_Widget_Calendar');
@@ -36,10 +33,7 @@ class WidgetServiceProvider implements ServiceProviderInterface
                 unregister_widget('WP_Widget_Media_Video');
                 unregister_widget('WP_Widget_Media_Gallery');
                 unregister_widget('WP_Widget_Media_Image');
-
             });
-
-
         };
     }
 }

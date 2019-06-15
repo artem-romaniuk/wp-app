@@ -2,39 +2,37 @@
 
 namespace App\Core\Controller;
 
-
 abstract class Controller
 {
     protected $layout = 'default';
 
-
     abstract public function single();
 
-    public function view($template, array $data = [])
+    public function view($template, array $data = []): void
     {
         $viewsPath = app('path.views');
 
-        $individualTemplate = is_file($viewsPath . DIRECTORY_SEPARATOR . $template . '-' . $this->templateName() . '.php') ? $viewsPath . DIRECTORY_SEPARATOR . $template . '-' . $this->templateName() . '.php' : null;
-        $requestedTemplate = is_file($viewsPath . DIRECTORY_SEPARATOR . $template . '.php') ? $viewsPath . DIRECTORY_SEPARATOR . $template . '.php' : null;
-        $defaultTemplate = $viewsPath . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . 'default.php';
+        $object = get_queried_object();
 
-        $contentTemplate = $individualTemplate ? $individualTemplate : ($requestedTemplate ? $requestedTemplate : $defaultTemplate);
+        $template = $viewsPath . DIRECTORY_SEPARATOR . $template .$this->templateName($object) . '.php';
+
+        if (!is_file($template)) {
+            throw new \Exception(sprintf('Template file %s not found', $template));
+        }
 
         extract($data);
 
         require_once $viewsPath . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . 'header.php';
 
-        require_once $contentTemplate;
+        require_once $template;
 
         require_once $viewsPath . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . 'footer.php';
     }
 
-    protected function templateName()
+    protected function templateName($object): string
     {
-        $object = get_queried_object();
-
         return ($object instanceof \WP_Post && isset($object->page_template_name))
-            ? strtolower($object->page_template_name)
+            ? '-' . strtolower($object->page_template_name)
             : '';
     }
 }

@@ -8,12 +8,9 @@ class Post extends Model
 {
     protected $postType = 'post';
 
-    //protected $postsPerPage;
-
-
     public function all()
     {
-        return $this->queryPost([
+        return new \WP_Query([
             'posts_per_page' => $this->postsPerPage,
             'post_type' => $this->postType,
         ]);
@@ -21,7 +18,7 @@ class Post extends Model
 
     public function find($id)
     {
-        return $this->queryPost([
+        return new \WP_Query([
             'p' => (int) $id,
             'post_type' => $this->postType,
         ]);
