@@ -16,31 +16,27 @@ class AppServiceProvider implements ServiceProviderInterface
     public function register(Container $container)
     {
         $container['theme'] = function ($container) {
-            $object = new Theme($container);
-            $object->init();
+            return new Theme($container);
         };
 
         $container['option'] = function ($container) {
-            $object = new OptionCreator($container['config.options']);
-            $object->create();
+            return new OptionCreator($container['config.options']);
         };
 
         $container['post_type'] = function ($container) {
-            $object = new PostType($container['config.types']);
-            $object->create();
+            return new PostType($container['config.types']);
         };
 
         $container['taxonomy'] = function ($container) {
-            $object = new Taxonomy($container['config.types']);
-            $object->create();
+            return new Taxonomy($container['config.types']);
         };
 
-        $container['meta_box'] = function ($container) {
-            $object = new MetaPostCreator($container['config.types']);
-            $object->create();
+        $container['post_meta_box'] = function ($container) {
+            return new MetaPostCreator($container['config.types']);
+        };
 
-            $object = new MetaTermCreator($container['config.types']);
-            $object->create();
+        $container['term_meta_box'] = function ($container) {
+            return new MetaTermCreator($container['config.types']);
         };
     }
 }

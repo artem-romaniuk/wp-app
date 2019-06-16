@@ -12,8 +12,7 @@ class PostController extends Controller
         global $wp_query;
 
         $this->view('post/single', [
-            'page' => $wp_query->post,
-            'article' => $wp_query->post
+            'post' => $wp_query->post
         ]);
     }
 

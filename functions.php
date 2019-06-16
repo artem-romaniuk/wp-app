@@ -6,6 +6,7 @@ use League\Pipeline\Pipeline;
 use App\Middlewares\CustomPostTypeMiddleware;
 use App\Middlewares\TermMiddleware;
 use App\Middlewares\UserMiddleware;
+use App\Core\Container\Container;
 
 defined('ABSPATH') or die('Access denied');
 
@@ -13,14 +14,17 @@ show_admin_bar(false);
 
 require_once get_template_directory() . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-add_action('template_redirect', function() {
-    app('theme');
-    app('option');
-    app('post_type');
-    app('taxonomy');
-    app('meta_box');
-    app('widget');
+$container = Container::getInstance();
 
+$container['theme']->init();
+$container['option']->create();
+$container['post_type']->create();
+$container['taxonomy']->create();
+$container['post_meta_box']->create();
+$container['term_meta_box']->create();
+$container['widget'];
+
+add_action('template_redirect', function() {
     global $app, $wp_query;
 
     set_query_var('app', $app);
